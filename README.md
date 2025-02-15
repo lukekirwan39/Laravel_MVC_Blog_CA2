@@ -10,6 +10,9 @@ This repository is linked to [this youtube video](https://www.youtube.com/watch?
 •	PHP 7.3 or higher <br>
 •	Node 12.13.0 or higher <br>
 
+## Author
+Luke Kirwan
+
 ## Usage <br>
 Setting up your development environment on your local machine: <br>
 ```
