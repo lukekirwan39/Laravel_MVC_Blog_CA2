@@ -8,61 +8,73 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Tech Insights') }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
-<div class="flex flex-col">
-    @if(Route::has('login'))
-        <div class="absolute top-0 right-0 mt-4 mr-4 space-x-4 sm:mt-6 sm:mr-6 sm:space-x-6">
+
+<!-- Navbar -->
+<nav class="bg-blue-600 p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="{{ url('/') }}" class="text-white text-2xl font-bold">Tech Insights</a>
+        <div class="space-x-4">
             @auth
-                <a href="{{ url('/home') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Home') }}</a>
+                <a href="{{ url('/dashboard') }}" class="text-white hover:underline">Dashboard</a>
+                <a href="{{ route('logout') }}" class="text-white hover:underline"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
             @else
-                <a href="{{ route('login') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Login') }}</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Register') }}</a>
-                @endif
+                <a href="{{ route('login') }}" class="text-white hover:underline">Login</a>
+                <a href="{{ route('register') }}" class="text-white hover:underline">Register</a>
             @endauth
         </div>
-    @endif
-
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="flex flex-col justify-around h-full">
-            <div>
-                <h1 class="mb-6 text-gray-600 text-center font-light tracking-wider text-4xl sm:mb-8 sm:text-6xl">
-                    {{ config('app.name', 'Laravel') }}
-                </h1>
-                <ul class="flex flex-col space-y-2 sm:flex-row sm:flex-wrap sm:space-x-8 sm:space-y-0">
-                    <li>
-                        <a href="https://laravel.com/docs" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Documentation">Documentation</a>
-                    </li>
-                    <li>
-                        <a href="https://laracasts.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Laracasts">Laracasts</a>
-                    </li>
-                    <li>
-                        <a href="https://laravel-news.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="News">News</a>
-                    </li>
-                    <li>
-                        <a href="https://nova.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Nova">Nova</a>
-                    </li>
-                    <li>
-                        <a href="https://forge.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Forge">Forge</a>
-                    </li>
-                    <li>
-                        <a href="https://vapor.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Vapor">Vapor</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/laravel/laravel" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="GitHub">GitHub</a>
-                    </li>
-                    <li>
-                        <a href="https://tailwindcss.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Tailwind Css">Tailwind CSS</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
-</div>
+</nav>
+
+<!-- Hero Section -->
+<header class="bg-gray-900 text-white text-center py-20">
+    <h1 class="text-5xl font-extrabold">Welcome to Tech Insights</h1>
+    <p class="mt-4 text-lg">Your go-to platform for the latest technology news, tutorials, and reviews.</p>
+    <a href="{{ route('posts.index') }}" class="mt-6 inline-block bg-blue-500 px-6 py-3 text-lg font-semibold rounded shadow hover:bg-blue-700 transition">
+        Explore Posts
+    </a>
+</header>
+
+<!-- Recent Posts Section -->
+<section class="container mx-auto mt-10 p-6">
+    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Recent Blog Posts</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach ($posts as $post)
+            <div class="bg-white p-4 rounded shadow-md">
+                <h3 class="text-xl font-semibold text-blue-600">
+                    <a href="{{ route('posts.show', $post->id) }}" class="hover:underline">
+                        {{ $post->title }}
+                    </a>
+                </h3>
+                <p class="text-gray-600">{{ Str::limit($post->content, 100) }}</p>
+                <p class="text-sm text-gray-500 mt-2">By {{ $post->author }} | {{ $post->created_at->format('M d, Y') }}</p>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="{{ route('posts.index') }}" class="bg-blue-500 text-white px-6 py-3 rounded shadow hover:bg-blue-700 transition">
+            View All Posts
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white text-center py-6 mt-10">
+    <p>&copy; {{ date('Y') }} Tech Insights. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>

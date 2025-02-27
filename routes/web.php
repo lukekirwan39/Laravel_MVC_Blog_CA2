@@ -35,3 +35,11 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+use App\Http\Controllers\PostControllers;
+
+Route::get('/', [PostControllers::class, 'index'])->name('home');
+

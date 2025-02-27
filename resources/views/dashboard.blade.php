@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="sm:container sm:mx-auto sm:mt-10">
-        <div class="w-full sm:px-6">
+    <main class="container mx-auto mt-10">
+        <div class="w-full px-6">
 
             @if (session('status'))
                 <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4" role="alert">
@@ -10,24 +10,27 @@
                 </div>
             @endif
 
-            <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
+            <section class="bg-white border rounded-md shadow-md">
 
-                <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
+                <!-- Dashboard Header -->
+                <header class="font-semibold bg-gray-200 text-gray-700 py-6 px-8 rounded-t-md text-lg">
                     Dashboard
                 </header>
 
-                <div class="w-full p-6">
+                <!-- Welcome Message -->
+                <div class="p-6">
                     <p class="text-gray-700 text-lg">
                         Welcome, <span class="font-bold">{{ Auth::user()->name }}</span>! You are logged in.
                     </p>
 
+                    <!-- Create New Post Button -->
                     <div class="mt-6">
                         <a href="{{ route('posts.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 transition">
                             + Create New Post
                         </a>
                     </div>
 
-                    <!-- Recent Blog Posts -->
+                    <!-- Recent Blog Posts Section -->
                     <div class="mt-8">
                         <h2 class="text-xl font-bold text-gray-800">Recent Blog Posts</h2>
 
