@@ -23,3 +23,21 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+
+Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
+
+Route::get('/search', [PostsController::class, 'search'])->name('posts.search');
+
