@@ -10,7 +10,7 @@
 "use strict";
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 /* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")["Buffer"];
-// Axios v1.7.9 Copyright (c) 2024 Matt Zabriskie and contributors
+/*! Axios v1.8.2 Copyright (c) 2025 Matt Zabriskie and contributors */
 
 
 function bind(fn, thisArg) {
@@ -619,26 +619,6 @@ const toFiniteNumber = (value, defaultValue) => {
   return value != null && Number.isFinite(value = +value) ? value : defaultValue;
 };
 
-const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-
-const DIGIT = '0123456789';
-
-const ALPHABET = {
-  DIGIT,
-  ALPHA,
-  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT
-};
-
-const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
-  let str = '';
-  const {length} = alphabet;
-  while (size--) {
-    str += alphabet[Math.random() * length|0];
-  }
-
-  return str;
-};
-
 /**
  * If the thing is a FormData object, return true, otherwise return false.
  *
@@ -766,8 +746,6 @@ var utils$1 = {
   findKey,
   global: _global,
   isContextDefined,
-  ALPHABET,
-  generateString,
   isSpecCompliantForm,
   toJSONObject,
   isAsyncFn,
@@ -2260,8 +2238,9 @@ function combineURLs(baseURL, relativeURL) {
  *
  * @returns {string} The combined full path
  */
-function buildFullPath(baseURL, requestedURL) {
-  if (baseURL && !isAbsoluteURL(requestedURL)) {
+function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
+  let isRelativeUrl = !isAbsoluteURL(requestedURL);
+  if (baseURL && isRelativeUrl || allowAbsoluteUrls == false) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
@@ -3101,7 +3080,7 @@ function dispatchRequest(config) {
   });
 }
 
-const VERSION = "1.7.9";
+const VERSION = "1.8.2";
 
 const validators$1 = {};
 
@@ -3286,6 +3265,13 @@ class Axios {
       }
     }
 
+    // Set config.allowAbsoluteUrls
+    if (config.allowAbsoluteUrls !== undefined) ; else if (this.defaults.allowAbsoluteUrls !== undefined) {
+      config.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls;
+    } else {
+      config.allowAbsoluteUrls = true;
+    }
+
     validator.assertOptions(config, {
       baseUrl: validators.spelling('baseURL'),
       withXsrfToken: validators.spelling('withXSRFToken')
@@ -3381,7 +3367,7 @@ class Axios {
 
   getUri(config) {
     config = mergeConfig(this.defaults, config);
-    const fullPath = buildFullPath(config.baseURL, config.url);
+    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
     return buildURL(fullPath, config.params, config.paramsSerializer);
   }
 }
@@ -23219,7 +23205,7 @@ process.umask = function() { return 0; };
   \*******************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nError: Cannot find module '@tailwindcss/ui'\nRequire stack:\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/tailwind.config.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/tailwindcss/lib/index.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/webpack.mix.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/laravel-mix/setup/webpack.config.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack-cli/lib/webpack-cli.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack-cli/lib/bootstrap.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack-cli/bin/cli.js\n- /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/bin/webpack.js\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1409:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1060:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1065:22)\n    at Function._load (node:internal/modules/cjs/loader:1214:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)\n    at Module.require (node:internal/modules/cjs/loader:1495:12)\n    at require (node:internal/modules/helpers:135:16)\n    at Object.<anonymous> (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/tailwind.config.js:11:5)\n    at Module._compile (node:internal/modules/cjs/loader:1739:14)\n    at Object..js (node:internal/modules/cjs/loader:1904:10)\n    at Module.load (node:internal/modules/cjs/loader:1473:32)\n    at Function._load (node:internal/modules/cjs/loader:1285:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)\n    at Module.require (node:internal/modules/cjs/loader:1495:12)\n    at require (node:internal/modules/helpers:135:16)\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/tailwindcss/lib/index.js:76:107\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/tailwindcss/lib/processTailwindFeatures.js:50:20\n    at LazyResult.runOnRoot (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:329:16)\n    at LazyResult.runAsync (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:258:26)\n    at async Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:97:14)\n    at processResult (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:891:19)\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:1037:5\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:400:11\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:252:18\n    at context.callback (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:142:7)");
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nError: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.\n    at Re (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/tailwindcss/dist/lib.js:33:1723)\n    at LazyResult.runOnRoot (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:361:16)\n    at LazyResult.runAsync (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:290:26)\n    at async Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:97:14)\n    at processResult (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:891:19)\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:1037:5\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:400:11\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:252:18\n    at context.callback (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:142:7)");
 
 /***/ }),
 

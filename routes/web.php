@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PostControllers;
 use App\Http\Controllers\PostsController;
 
 /*
@@ -15,7 +16,12 @@ use App\Http\Controllers\PostsController;
 |
 */
 
-Route::get('/', [PagesController::class, 'index']);
+Route::get('/', [PagesController::class, 'index'])->name('home');
+
+Route::get('/', [PostControllers::class, 'index'])->name('home');
+
+// Route for displaying a single post
+Route::get('/posts/{id}', [PostControllers::class, 'show'])->name('posts.show');
 
 Route::resource('/blog', PostsController::class);
 
