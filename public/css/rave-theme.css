@@ -1,0 +1,215 @@
+/* Enhanced Rave Theme CSS */
+
+body {
+    background: linear-gradient(45deg, #0d0d0d, #1a1a1a, #262626);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    animation: raveBackground 8s infinite alternate ease-in-out;
+}
+
+@keyframes raveBackground {
+    0% { background-color: #0d0d0d; }
+    100% { background-color: #1a1a1a; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ff00ff;
+    text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+    margin: 0;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+a {
+    color: #00ff00;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+button {
+    background: radial-gradient(circle, #ff00ff, #ff1493);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 0 10px #ff00ff;
+}
+
+button:hover {
+    background: radial-gradient(circle, #00ff00, #32cd32);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00ff00;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.responsive-image {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.responsive-image img {
+    width: 100%;
+    height: auto;
+    animation: scroll 10s linear infinite alternate;
+}
+
+@keyframes scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50px); }
+}
+
+.neon-border {
+    border: 3px solid #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.neon-text {
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.card {
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+}
+
+.card img {
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 10px #ff00ff;
+}
+
+.card h2 {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+}
+
+.footer {
+    background: #1a1a1a;
+    color: #ff00ff;
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid #ff00ff;
+    box-shadow: 0 -5px 15px rgba(255, 0, 255, 0.5);
+    font-size: 1.2rem;
+}
+
+.footer a {
+    color: #00ff00;
+    margin: 0 12px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer a:hover {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.navbar {
+    background: #1a1a1a;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #ff00ff;
+    box-shadow: 0 5px 15px rgba(255, 0, 255, 0.5);
+}
+
+.navbar a {
+    color: #00ff00;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.navbar .menu {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .menu button {
+    background: radial-gradient(circle, #ff00ff, #ff1493);
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+
+.navbar .menu button:hover {
+    background: radial-gradient(circle, #00ff00, #32cd32);
+    transform: scale(1.1);
+}
+
+.dashboard {
+    list-style: none;
+    padding: 0;
+}
+
+.dashboard li {
+    margin-bottom: 10px;
+}
+
+.dashboard li a {
+    display: block;
+    padding: 10px;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard li a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .responsive-image img {
+        animation: scroll 15s linear infinite;
+    }
+}
