@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <link href="{{ asset('css/rave.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -24,20 +27,22 @@
 <div id="app">
 
     <!-- Include Navbar -->
-    @include('layouts.navbar')
+    <div x-data="{ isOpen: false }">
+        @include('layouts.navbar')
 
-    <!-- Flash Messages -->
-    @if(session('success'))
-        <div class="bg-green-500 text-white text-center py-2 neon-border">
-            {{ session('success') }}
-        </div>
-    @endif
+        <!-- Flash Messages -->
+        @if(session('success'))
+            <div class="bg-green-500 text-white text-center py-2 neon-border">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    @if(session('error'))
-        <div class="bg-red-500 text-white text-center py-2 neon-border">
-            {{ session('error') }}
-        </div>
-    @endif
+        @if(session('error'))
+            <div class="bg-red-500 text-white text-center py-2 neon-border">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
 
     <!-- Main Content Area -->
     <div class="container mx-auto flex">

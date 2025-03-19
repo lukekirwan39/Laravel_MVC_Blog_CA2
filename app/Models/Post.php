@@ -12,7 +12,8 @@ class Post extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = ['title', 'slug', 'description', 'image_path', 'user_id'];
+
+    protected $fillable = ['title', 'slug', 'description', 'category_id', 'image_path', 'user_id'];
 
     public function user()
     {
@@ -42,5 +43,10 @@ class Post extends Model
                 $post->slug = Str::slug($post->title) . '-' . rand(1000, 9999);
             }
         });
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
