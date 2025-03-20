@@ -5,21 +5,21 @@
     <div class="main-container min-h-screen text-black dark:text-white-dark">
         <div x-data="auth">
             <div class="absolute inset-0">
-                <img src="assets/images/auth/bg-gradient.png" alt="image" class="h-full w-full object-cover">
+                <img src="./back/assets/images/auth/bg-gradient.png" alt="image" class="h-full w-full object-cover">
             </div>
 
             <div class="relative flex min-h-screen items-center justify-center bg-[url(../images/auth/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
-                <img src="assets/images/auth/coming-soon-object1.png" alt="image" class="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2">
-                <img src="assets/images/auth/coming-soon-object2.png" alt="image" class="absolute left-24 top-0 h-40 md:left-[30%]">
-                <img src="assets/images/auth/coming-soon-object3.png" alt="image" class="absolute right-0 top-0 h-[300px]">
-                <img src="assets/images/auth/polygon-object.svg" alt="image" class="absolute bottom-0 end-[28%]">
+                <img src="./back/assets/images/auth/coming-soon-object1.png" alt="image" class="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2">
+                <img src="./back/assets/images/auth/coming-soon-object2.png" alt="image" class="absolute left-24 top-0 h-40 md:left-[30%]">
+                <img src="./back/assets/images/auth/coming-soon-object3.png" alt="image" class="absolute right-0 top-0 h-[300px]">
+                <img src="./back/assets/images/auth/polygon-object.svg" alt="image" class="absolute bottom-0 end-[28%]">
                 <div class="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
                     <div class="relative flex flex-col justify-center rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 px-6 lg:min-h-[758px] py-20">
                         <div class="absolute top-6 end-6">
                             <div class="dropdown" x-data="dropdown" @click.outside="open = false">
                                 <a href="javascript:;" class="flex items-center gap-2.5 rounded-lg border border-white-dark/30 bg-white px-2 py-1.5 text-white-dark hover:border-primary hover:text-primary dark:bg-black" :class="{'!border-primary !text-primary' : open}" @click="toggle">
                                     <div>
-                                        <img :src="`assets/images/flags/${$store.app.locale.toUpperCase()}.svg`" alt="image" class="h-5 w-5 rounded-full object-cover" src="assets/images/flags/EN.svg">
+                                        <img :src="`./back/assets/images/flags/${$store.app.locale.toUpperCase()}.svg`" alt="image" class="h-5 w-5 rounded-full object-cover" src="./back/assets/images/flags/EN.svg">
                                     </div>
                                     <div x-text="$store.app.locale" class="text-base font-bold uppercase">en</div>
                                     <span class="shrink-0" :class="{'rotate-180' : open}">
@@ -32,91 +32,11 @@
                                     <template x-for="item in languages">
                                         <li>
                                             <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                                <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image">
+                                                <img class="h-5 w-5 rounded-full object-cover" :src="`./back/assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image">
                                                 <span class="ltr:ml-3 rtl:mr-3" x-text="item.key"></span>
                                             </a>
                                         </li>
-                                    </template><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/KH.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Khmer</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/DA.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Danish</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary bg-primary/10 text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/EN.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">English</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/FR.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">French</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/DE.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">German</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/EL.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Greek</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/HU.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Hungarian</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/IT.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Italian</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/JA.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Japanese</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/PL.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Polish</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/PT.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Portuguese</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/RU.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Russian</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/ES.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Spanish</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/SV.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Swedish</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/TR.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Turkish</span>
-                                        </a>
-                                    </li><li>
-                                        <a href="javascript:;" class="hover:text-primary" @click="$store.app.toggleLocale(item.value),toggle()" :class="{'bg-primary/10 text-primary' : $store.app.locale == item.value}">
-                                            <img class="h-5 w-5 rounded-full object-cover" :src="`assets/images/flags/${item.value.toUpperCase()}.svg`" alt="image" src="assets/images/flags/AE.svg">
-                                            <span class="ltr:ml-3 rtl:mr-3" x-text="item.key">Arabic</span>
-                                        </a>
-                                    </li>
+                                    </template>
                                 </ul>
                             </div>
                         </div>
@@ -152,6 +72,9 @@
                                                 </svg>
                                             </span>
                                     </div>
+                                    <span class="form-label-description">Forgot your password?
+                                        <a href="{{ route('author.forgot-password') }}" class="text-primary">Reset it</a>
+                                    </span>
                                 </div>
                                 <div>
                                     <label class="flex cursor-pointer items-center">

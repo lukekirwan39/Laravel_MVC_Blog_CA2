@@ -8,6 +8,6 @@ class AuthorController extends Controller
 {
     public function index(Request $request)
     {
-        return view('back.pages.author.home');
+        return view('back.pages.home');
     }
 }
