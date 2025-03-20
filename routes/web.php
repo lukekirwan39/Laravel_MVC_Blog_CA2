@@ -1,21 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [PagesController::class, 'index']);
-Route::resource('/blog', PostsController::class);
+use App\Http\Controllers\AuthorController;
 
-Auth::routes();
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::prefix('author')->name('author.')->group(function (){
 
-Route::get('/', [PostsController::class, 'index'])->name('home');
-Route::get('/blog', [PostsController::class, 'index'])->name('posts.index');
-Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
-Route::get('/create', [PostsController::class, 'create'])->name('posts.create');
-Route::get('/search', [PostsController::class, 'search'])->name('posts.search');
+    Route::middleware(['guest:web'])->group(function (){
+        Route::view('/login','back.pages.auth.login')->name('login');
+        Route::view('/forgot-password','back.pages.auth.forgot')->name('forgot-password');
+    });
+
+    Route::middleware([])->group(function (){
+        Route::get('/home', [AuthorController::class, 'index'])->name('home');
+    });
+});

@@ -13,15 +13,15 @@ class Posts extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('slug');
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
-            $table->longText('description');
-            $table->string('image_path');
+            $table->string('slug')->unique();
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

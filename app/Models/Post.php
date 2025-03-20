@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = ['title', 'slug', 'description', 'image_path', 'user_id'];
+
+    protected $fillable = ['title', 'slug', 'description', 'category_id', 'image_path', 'user_id'];
 
     public function user()
     {
@@ -25,5 +27,26 @@ class Post extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    // ✅ Automatically generate a unique slug before saving
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = Str::slug($post->title) . '-' . rand(1000, 9999);
+            }
+        });
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

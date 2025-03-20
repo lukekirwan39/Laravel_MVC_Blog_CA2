@@ -1,80 +1,61 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Tech Insights') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <title>Welcome to Laravel 8 Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #141E30, #243B55);
+            color: white;
+            text-align: center;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .btn-custom {
+            background: #ff4e50;
+            color: white;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background: #ff6b6b;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 h-screen antialiased leading-none font-sans">
+<body>
 
-<!-- Navbar -->
-<nav class="bg-blue-600 p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-        <a href="{{ url('/') }}" class="text-white text-2xl font-bold">Tech Insights</a>
-        <div class="space-x-4">
-            @auth
-                <a href="{{ url('/dashboard') }}" class="text-white hover:underline">Dashboard</a>
-                <a href="{{ route('logout') }}" class="text-white hover:underline"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                    @csrf
-                </form>
-            @else
-                <a href="{{ route('login') }}" class="text-white hover:underline">Login</a>
-                <a href="{{ route('register') }}" class="text-white hover:underline">Register</a>
-            @endauth
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Laravel 8 Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+{{--                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>--}}
+{{--                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>--}}
+            </ul>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<header class="bg-gray-900 text-white text-center py-20">
-    <h1 class="text-5xl font-extrabold">Welcome to Tech Insights</h1>
-    <p class="mt-4 text-lg">Your go-to platform for the latest technology news, tutorials, and reviews.</p>
-    <a href="{{ route('posts.index') }}" class="mt-6 inline-block bg-blue-500 px-6 py-3 text-lg font-semibold rounded shadow hover:bg-blue-700 transition">
-        Explore Posts
-    </a>
-</header>
+<div class="hero">
+    <h1 class="display-4">Welcome to Laravel 8 Blog</h1>
+    <p class="lead">A simple and elegant blog powered by Laravel.</p>
+{{--    <a href="{{ route('posts.index') }}" class="btn btn-custom">Explore Posts</a>--}}
+</div>
 
-<!-- Recent Posts Section -->
-<section class="container mx-auto mt-10 p-6">
-    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Recent Blog Posts</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        @foreach ($posts as $post)
-            <div class="bg-white p-4 rounded shadow-md">
-                <h3 class="text-xl font-semibold text-blue-600">
-                    <a href="{{ route('posts.show', $post->id) }}" class="hover:underline">
-                        {{ $post->title }}
-                    </a>
-                </h3>
-                <p class="text-gray-600">{{ Str::limit($post->content, 100) }}</p>
-                <p class="text-sm text-gray-500 mt-2">By {{ $post->author }} | {{ $post->created_at->format('M d, Y') }}</p>
-            </div>
-        @endforeach
-    </div>
-
-    <div class="text-center mt-6">
-        <a href="{{ route('posts.index') }}" class="bg-blue-500 text-white px-6 py-3 rounded shadow hover:bg-blue-700 transition">
-            View All Posts
-        </a>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-gray-900 text-white text-center py-6 mt-10">
-    <p>&copy; {{ date('Y') }} Tech Insights. All Rights Reserved.</p>
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
