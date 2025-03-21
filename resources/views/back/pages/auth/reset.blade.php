@@ -1,5 +1,5 @@
 @extends('back.layouts.auth-layout')
-@section('pageTitled', isset($pageTitle) ? $pageTitle : 'Forgot Password')
+@section('pageTitled', isset($pageTitle) ? $pageTitle : 'Login')
 @section('content')
 
     <div class="main-container min-h-screen text-black dark:text-white-dark">
@@ -40,7 +40,7 @@
                                 </ul>
                             </div>
                         </div>
-                        @livewire('author-forgot-form')
+                        @livewire('author-reset-form')
                     </div>
                 </div>
             </div>
