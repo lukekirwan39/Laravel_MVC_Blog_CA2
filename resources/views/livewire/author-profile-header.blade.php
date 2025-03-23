@@ -1,7 +1,11 @@
 <div>
     <div class="mb-5">
         <div class="flex flex-col items-center justify-center">
-            <img src="./back/assets/images/profile-34.jpeg" alt="image" class="mb-5 h-24 w-24 rounded-full object-cover">
+            <img
+                src="{{ $author->picture }}"
+                alt="Author Avatar"
+                class="mb-5 h-24 w-24 rounded-full object-cover"
+            />
             <p class="text-xl font-semibold text-primary">{{ $author->name }}</p>
         </div>
         <ul class="mx-auto mt-5 flex w-full max-w-md flex-col space-y-4 font-semibold text-white-dark">            <li>
@@ -28,7 +32,8 @@
                     <span class="truncate text-primary">{{ $author->email }}</span></a>
             </li>
             <li class="col-auto d-md-flex">
-                <a href="#" class="btn btn-primary">
+                <input type="file" name="file" id="changeAuthorPictureFile" style="display: none" onchange="this.dispatchEvent(new InputEvent('input'))">
+                <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('changeAuthorPictureFile').click();">
                     Change Picture
                 </a>
             </li>

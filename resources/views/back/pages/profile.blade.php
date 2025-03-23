@@ -30,3 +30,23 @@
             </div>
         </div>
 @endsection
+@push('scripts')
+    <script>
+        $('#changeAuthorPictureFile').ijaboCropTool({
+            preview : '',
+            setRatio:1,
+            allowedExtensions: ['jpg', 'jpeg','png'],
+            buttonsText:['CROP','QUIT'],
+            buttonsColor:['#30bf7d','#ee5155', -15],
+            processUrl:'{{ route("author.change-profile-picture") }}',
+            withCSRF:['_token','{{ csrf_token() }}'],
+            onSuccess:function(message, element, status){
+                Livewire.emit('updateAuthorProfileHeader');
+                Livewire.emit('updateTopHeader');
+            },
+            onError:function(message, element, status){
+                alert(message);
+            }
+        })
+    </script>
+@endpush
