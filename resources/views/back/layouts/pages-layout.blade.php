@@ -186,8 +186,95 @@
 <!-- end theme customizer section -->
 
 <div class="main-container min-h-screen text-black dark:text-white-dark" :class="[$store.app.navbar]">
+    <!-- start dropdown section -->
     <!-- start sidebar section -->
-    <!-- end sidebar section -->
+    <div :class="{'dark text-white-dark' : $store.app.semidark}">
+        <nav x-data="sidebar" class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
+            <div class="h-full bg-white dark:bg-[#0e1726]">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <a href="index.html" class="main-logo flex shrink-0 items-center">
+                        <img class="ml-[5px] w-8 flex-none" src="./back/assets/images/logo.png" alt="image">
+                        <span class="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">StarCode Kh</span>
+                    </a>
+                    <a href="javascript:;" class="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10" @click="$store.app.toggleSidebar()">
+                        <svg class="m-auto h-5 w-5" width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </a>
+                </div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="{{ route('author.home') }}" class="nav-link group">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v11a1 1 0 01-1 1h-3m-4 0h4" />
+                                </svg>
+                                <span class="ltr:pl-3 rtl:pr-3">Home</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/menus" class="nav-link group">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                                <span class="ltr:pl-3 rtl:pr-3">Menu & Categories</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="menu nav-item" x-data="{ open: false }">
+                        <button type="button" class="nav-link group" @click="open = !open">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
+                                </svg>
+                                <span class="ltr:pl-3 rtl:pr-3">Posts</span>
+                            </div>
+                            <div class="rtl:rotate-180" :class="{ '!rotate-90': open }">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <ul x-cloak x-show="open" x-collapse class="sub-menu text-gray-500">
+                            <li>
+                                <a href="/posts/create">Add New</a>
+                            </li>
+                            <li>
+                                <a href="/posts">All Posts</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu nav-item" x-data="{ open: false }">
+                        <button type="button" class="nav-link group" @click="open = !open">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3M19.4 15a8 8 0 10-2.4 2.4L21 21" />
+                                </svg>
+                                <span class="ltr:pl-3 rtl:pr-3">Settings</span>
+                            </div>
+                            <div class="rtl:rotate-180" :class="{ '!rotate-90': open }">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <ul x-cloak x-show="open" x-collapse class="sub-menu text-gray-500">
+                            <li>
+                                <a href="/settings/general">General Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- end dropdown section -->
 
     <div class="main-content flex min-h-screen flex-col">
         <!-- start header section -->
