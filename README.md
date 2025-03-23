@@ -5,12 +5,11 @@ A simple blog application built with Laravel 8 for posting, managing, and readin
 ## 📦 Features
 
 - User authentication (login/register)
-- Admin panel to manage posts
-- CRUD operations for blog posts
 - SEO-friendly URLs and meta tags
 - Image upload and preview
-- Comment system (optional)
 - Responsive design with Tailwind CSS
+- Forgot password
+- Profile changes
 
 ## 🛠️ Tech Stack
 
@@ -25,7 +24,7 @@ A simple blog application built with Laravel 8 for posting, managing, and readin
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/larablog.git
+git clone [https://github.com/your-username/larablog.git](https://github.com/lukekirwan39/Laravel_MVC_Blog_CA2.git)
 cd larablog
 
 ## Requirements
