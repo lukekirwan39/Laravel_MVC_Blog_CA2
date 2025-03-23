@@ -16,5 +16,7 @@ Route::prefix('author')->name('author.')->group(function (){
         Route::post('/logout', [AuthorController::class, 'logout'])->name('logout');
         Route::view('/profile','back.pages.profile')->name('profile');
         Route::view('/profile-settings', 'back.pages.profile-settings')->name('profile-settings');
+        Route::view('/about', 'back.pages.about')->name('about');
+        Route::view('/contact', 'back.pages.contact')->name('contact');
     });
 });
