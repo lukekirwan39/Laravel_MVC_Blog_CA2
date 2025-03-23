@@ -2,6 +2,9 @@
 
 A simple blog application built with Laravel 8 for posting, managing, and reading articles.
 
+## Password for all Users
+Password: 12345
+
 ## 📦 Features
 
 - User authentication (login/register)
