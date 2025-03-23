@@ -19,5 +19,6 @@ Route::prefix('author')->name('author.')->group(function (){
         Route::view('/about', 'back.pages.about')->name('about');
         Route::view('/contact', 'back.pages.contact')->name('contact');
         Route::post('/change-profile-picture', [AuthorController::class, 'changeProfilePicture'])->name('change-profile-picture');
+        Route::view('/settings', 'back.pages.settings')->name('settings');
     });
 });
