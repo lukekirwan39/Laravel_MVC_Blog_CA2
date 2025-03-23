@@ -1,10 +1,32 @@
-## Laravel 8 Complete Blog
+# Larablog
 
-This repository is linked to [this youtube video](https://www.youtube.com/watch?v=HKJDLXsTr8A&t=4710s) where I show you how to create a complete blog in Laravel 8 using best practices.
+A simple blog application built with Laravel 8 for posting, managing, and reading articles.
 
-•	Author: Code With Dary <br>
-•	Twitter: [@codewithdary](https://twitter.com/codewithdary) <br>
-•	Instagram: [@codewithdary](https://www.instagram.com/codewithdary/) <br>
+## 📦 Features
+
+- User authentication (login/register)
+- Admin panel to manage posts
+- CRUD operations for blog posts
+- SEO-friendly URLs and meta tags
+- Image upload and preview
+- Comment system (optional)
+- Responsive design with Tailwind CSS
+
+## 🛠️ Tech Stack
+
+- Laravel 8
+- Blade templating
+- Tailwind CSS
+- MySQL/MAMP
+- jQuery (for image preview)
+
+## 🚀 Setup Instructions
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/larablog.git
+cd larablog
 
 ## Requirements
 •	PHP 7.3 or higher <br>
