@@ -221,13 +221,13 @@
                     </div>
                     <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
                         <a href="javascript:;" class="group relative" @click="toggle()">
-                            <span><img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="./back/assets/images/user-profile.jpeg" alt="image"></span>
+                            <span><img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="{{ $author->picture }}" alt="image"></span>
                         </a>
                         <ul x-cloak="" x-show="open" x-transition="" x-transition.duration.300ms="" class="top-11 w-[230px] !py-0 font-semibold text-dark ltr:right-0 rtl:left-0 dark:text-white-dark dark:text-white-light/90">
                             <li>
                                 <div class="flex items-center px-4 py-4">
                                     <div class="flex-none">
-                                        <img class="h-10 w-10 rounded-md object-cover" src="./back/assets/images/user-profile.jpeg" alt="image">
+                                        <img class="h-10 w-10 rounded-md object-cover" src="{{ $author->picture }}" alt="image">
                                     </div>
                                     <div class="truncate ltr:pl-4 rtl:pr-4">
                                         <h4 class="text-base">
