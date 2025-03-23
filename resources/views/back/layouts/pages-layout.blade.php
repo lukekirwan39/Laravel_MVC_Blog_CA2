@@ -186,7 +186,6 @@
 <!-- end theme customizer section -->
 
 <div class="main-container min-h-screen text-black dark:text-white-dark" :class="[$store.app.navbar]">
-    <!-- start dropdown section -->
     <!-- start sidebar section -->
     <div :class="{'dark text-white-dark' : $store.app.semidark}">
         <nav x-data="sidebar" class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
