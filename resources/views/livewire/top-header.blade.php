@@ -4,9 +4,7 @@
             <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
                 <div class="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                     <a href="{{ route( 'author.home') }}" class="main-logo flex shrink-0 items-center">
-                        <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="./back/assets/images/logo.png" alt="image">
-                        <span class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">Laravel Blog</span>
-                    </a>
+                        <img class="inline w-12 ltr:-ml-1 rtl:-mr-1" src="https://img.freepik.com/premium-vector/blog-word-text-cut-from-paper-flat-design_100655-3169.jpg" alt="image">                    </a>
 
                     <a href="javascript:;" class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden" @click="$store.app.toggleSidebar()">
                         <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,13 +23,6 @@
                             </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="./index.html" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button">
-                            <span class="nav-link-title">
-                                Menu & Categories
-                            </span>
-                            </a>
-                        </li>
                         <li class="dropdown shrink-0 relative" x-data="{ open: false }" @click.outside="open = false">
                             <!-- Dropdown Trigger -->
                             <a href="javascript:;" class="flex items-center gap-1 rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="open = !open">
@@ -44,10 +35,7 @@
                             <!-- Dropdown Menu -->
                             <ul x-cloak x-show="open" x-transition x-transition.duration.300ms class="absolute top-11 w-[200px] bg-white dark:bg-dark border border-gray-200 dark:border-dark rounded-md shadow-md p-2 text-dark dark:text-white">
                                 <li>
-                                    <a href="/posts/create" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/posts" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">All Posts</a>
+                                    <a href=" {{ route('author.posts.add-post') }}" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">Add New</a>
                                 </li>
                             </ul>
                         </li>
@@ -63,7 +51,7 @@
                             <!-- Dropdown Menu -->
                             <ul x-cloak x-show="open" x-transition x-transition.duration.300ms class="absolute top-11 w-[200px] bg-white dark:bg-dark border border-gray-200 dark:border-dark rounded-md shadow-md p-2 text-dark dark:text-white">
                                 <li class="flex items-center">
-                                    <a href="/settings/general" class="block w-full px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">
+                                    <a href="{{ route('author.settings') }}" class="block w-full px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">
                                         General Settings
                                     </a>
                                 </li>
@@ -125,75 +113,6 @@
                         </a>
                     </div>
 
-                    <div class="dropdown" x-data="dropdown" @click.outside="open = false">
-                        <a href="javascript:;" class="relative block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="toggle">
-                            <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z" stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M12 6V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            </svg>
-
-                            <span class="absolute top-0 flex h-3 w-3 ltr:right-0 rtl:left-0">
-                                            <span class="absolute -top-[3px] inline-flex h-full w-full animate-ping rounded-full bg-success/50 opacity-75 ltr:-left-[3px] rtl:-right-[3px]"></span>
-                                            <span class="relative inline-flex h-[6px] w-[6px] rounded-full bg-success"></span>
-                                        </span>
-                        </a>
-                        <ul x-cloak="" x-show="open" x-transition="" x-transition.duration.300ms="" class="top-11 w-[300px] divide-y !py-0 text-dark ltr:-right-2 rtl:-left-2 dark:divide-white/10 dark:text-white-dark sm:w-[350px]">
-                            <li>
-                                <div class="flex items-center justify-between px-4 py-2 font-semibold hover:!bg-transparent">
-                                    <h4 class="text-lg">Notification</h4>
-                                    <template x-if="notifications.length">
-                                        <span class="badge bg-primary/80" x-text="notifications.length + 'New'"></span>
-                                    </template>
-                                </div>
-                            </li>
-                            <template x-for="notification in notifications">
-                                <li class="dark:text-white-light/90">
-                                    <div class="group flex items-center px-4 py-2" @click.self="toggle">
-                                        <div class="grid place-content-center rounded">
-                                            <div class="relative h-12 w-12">
-                                                <img class="h-12 w-12 rounded-full object-cover" :src="`./back/assets/images/${notification.profile}`" alt="image">
-                                                <span class="absolute bottom-0 right-[6px] block h-2 w-2 rounded-full bg-success"></span>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-auto ltr:pl-3 rtl:pr-3">
-                                            <div class="ltr:pr-3 rtl:pl-3">
-                                                <h6 x-html="notification.message"></h6>
-                                                <span class="block text-xs font-normal dark:text-gray-500" x-text="notification.time"></span>
-                                            </div>
-                                            <button type="button" class="text-neutral-300 opacity-0 hover:text-danger group-hover:opacity-100 ltr:ml-auto rtl:mr-auto" @click="removeNotification(notification.id)">
-                                                <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"></circle>
-                                                    <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </template>
-                            <template x-if="notifications.length">
-                                <li>
-                                    <div class="p-4">
-                                        <button class="btn btn-primary btn-small block w-full" @click="toggle">Read All Notifications</button>
-                                    </div>
-                                </li>
-                            </template>
-                            <template x-if="!notifications.length">
-                                <li>
-                                    <div class="!grid min-h-[200px] place-content-center text-lg hover:!bg-transparent">
-                                        <div class="mx-auto mb-4 rounded-full text-primary ring-4 ring-primary/30">
-                                            <svg width="40" height="40" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path opacity="0.5" d="M20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10Z" fill="currentColor"></path>
-                                                <path d="M10 4.25C10.4142 4.25 10.75 4.58579 10.75 5V11C10.75 11.4142 10.4142 11.75 10 11.75C9.58579 11.75 9.25 11.4142 9.25 11V5C9.25 4.58579 9.58579 4.25 10 4.25Z" fill="currentColor"></path>
-                                                <path d="M10 15C10.5523 15 11 14.5523 11 14C11 13.4477 10.5523 13 10 13C9.44772 13 9 13.4477 9 14C9 14.5523 9.44772 15 10 15Z" fill="currentColor"></path>
-                                            </svg>
-                                        </div>
-                                        No data available.
-                                    </div>
-                                </li>
-                            </template>
-                        </ul>
-                    </div>
                     <div>
                         <a href="{{ route('author.about') }}"
                            class="flex items-center justify-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
@@ -212,10 +131,8 @@
                            title="Contact">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 4H20C21.1046 4 22 4.89543 22 6V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6C2 4.89543 2.89543 4 4 4Z"
+                                <path d="M22 16.92V20C22 20.5304 21.7893 21.0391 21.4142 21.4142C21.0391 21.7893 20.5304 22 20 22C10.6112 22 2 13.3888 2 4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H7.09C7.29886 1.99991 7.50461 2.06341 7.68395 2.18395C7.86328 2.30449 8.00833 2.47664 8.103 2.68L10.29 7.41C10.3818 7.61877 10.4069 7.85004 10.361 8.07211C10.3151 8.29417 10.2003 8.49652 10.03 8.65L7.91 10.57C9.38713 13.197 11.803 15.6129 14.43 17.09L16.35 14.97C16.5035 14.7997 16.7058 14.6849 16.9279 14.639C17.15 14.5931 17.3812 14.6182 17.59 14.71L22.32 16.9C22.5234 16.9947 22.6955 17.1397 22.816 17.319C22.9366 17.4984 23.0001 17.7041 23 17.913V16.92H22Z"
                                       stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                      stroke-linejoin="round"/>
                             </svg>
                         </a>
                     </div>
@@ -245,27 +162,6 @@
                                         <path opacity="0.5" d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
                                     </svg>
                                     Profile</a>
-                            </li>
-                            <li>
-                                <a href="apps-mailbox.html" class="dark:hover:text-white" @click="toggle">
-                                    <svg class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" width="18" height="18" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.5" d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z" stroke="currentColor" stroke-width="1.5"></path>
-                                        <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                    </svg>
-                                    Inbox</a>
-                            </li>
-                            <li>
-                                <a href="auth-boxed-lockscreen.html" class="dark:hover:text-white" @click="toggle">
-                                    <svg class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" width="18" height="18" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 16C2 13.1716 2 11.7574 2.87868 10.8787C3.75736 10 5.17157 10 8 10H16C18.8284 10 20.2426 10 21.1213 10.8787C22 11.7574 22 13.1716 22 16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H8C5.17157 22 3.75736 22 2.87868 21.1213C2 20.2426 2 18.8284 2 16Z" stroke="currentColor" stroke-width="1.5"></path>
-                                        <path opacity="0.5" d="M6 10V8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                        <g opacity="0.5">
-                                            <path d="M9 16C9 16.5523 8.55228 17 8 17C7.44772 17 7 16.5523 7 16C7 15.4477 7.44772 15 8 15C8.55228 15 9 15.4477 9 16Z" fill="currentColor"></path>
-                                            <path d="M13 16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16C11 15.4477 11.4477 15 12 15C12.5523 15 13 15.4477 13 16Z" fill="currentColor"></path>
-                                            <path d="M17 16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16C15 15.4477 15.4477 15 16 15C16.5523 15 17 15.4477 17 16Z" fill="currentColor"></path>
-                                        </g>
-                                    </svg>
-                                    Lock Screen</a>
                             </li>
                             <li class="border-t border-white-light dark:border-white-light/10">
                                 <a href={{route('author.logout')}} class="!py-3 text-danger" @click="toggle" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
