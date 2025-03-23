@@ -62,14 +62,6 @@
                     Sign in
                 </button>
             </form>
-            <div class="relative my-7 text-center md:mb-9">
-                <span class="absolute inset-x-0 top-1/2 h-px w-full -translate-y-1/2 bg-white-light dark:bg-white-dark"></span>
-                <span class="relative bg-white px-2 font-bold uppercase text-white-dark dark:bg-dark dark:text-white-light">or</span>
-            </div>
-            <div class="text-center dark:text-white">
-                Don't have an account ?
-                <a href="auth-boxed-signup.html" class="uppercase text-primary underline transition hover:text-black dark:hover:text-white">SIGN UP</a>
-            </div>
         </div>
     </form>
 </div>
