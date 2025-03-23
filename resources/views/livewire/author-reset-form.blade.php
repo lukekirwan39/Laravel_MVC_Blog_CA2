@@ -13,8 +13,9 @@
         <form class="space-y-5 dark:text-white" method="post" wire:submit.prevent="ResetHandler()" autocomplete="off">
             <div>
                 @if(Session::has('fail'))
-                    <div class="alert" style="background: #ffffff; border-left: 5px solid #d41829; margin-bottom: 5px;>
-                        <strong class="text-danger">Error:</strong> <span class="text-danger">{!! Session::get('fail') !!}</span>
+                    <div class="alert p-3 rounded shadow-sm"
+                         style="background: #ffffff; border-left: 5px solid #d41829; margin-bottom: 5px;">
+                        <strong>Error:</strong> {!! Session::get('fail') !!}
                     </div>
                 @endif
                 <label for="Email">Email</label>

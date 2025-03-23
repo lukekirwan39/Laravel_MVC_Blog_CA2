@@ -6,7 +6,8 @@
                 <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password to login</p>
             </div>
             @if(Session::has('fail'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: #ffffff; border-left: 5px solid #d41829; margin-bottom: 5px;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                     style="background: #ffffff; border-left: 5px solid #d41829; margin-bottom: 5px;">
                     <strong>Error:</strong> {{ Session::get('fail') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
