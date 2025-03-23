@@ -215,17 +215,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="/menus" class="nav-link group">
-                            <div class="flex items-center">
-                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                                <span class="ltr:pl-3 rtl:pr-3">Menu & Categories</span>
-                            </div>
-                        </a>
-                    </li>
-
                     <li class="menu nav-item" x-data="{ open: false }">
                         <button type="button" class="nav-link group" @click="open = !open">
                             <div class="flex items-center">
