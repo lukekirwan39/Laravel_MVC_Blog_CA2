@@ -14,5 +14,7 @@ Route::prefix('author')->name('author.')->group(function (){
     Route::middleware(['auth:web'])->group(function (){
         Route::get('/home', [AuthorController::class, 'index'])->name('home');
         Route::post('/logout', [AuthorController::class, 'logout'])->name('logout');
+        Route::view('/profile','back.pages.profile')->name('profile');
+        Route::view('/profile-settings', 'back.pages.profile-settings')->name('profile-settings');
     });
 });

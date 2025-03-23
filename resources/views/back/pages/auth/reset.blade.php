@@ -1,5 +1,5 @@
 @extends('back.layouts.auth-layout')
-@section('pageTitled', isset($pageTitle) ? $pageTitle : 'Login')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Reset Password')
 @section('content')
 
     <div class="main-container min-h-screen text-black dark:text-white-dark">
