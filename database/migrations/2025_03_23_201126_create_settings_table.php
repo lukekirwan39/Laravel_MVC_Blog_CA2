@@ -15,6 +15,11 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('blog_name')->nullable();
+            $table->string('blog_email')->nullable();
+            $table->text('blog_description')->nullable();
+            $table->string('blog_logo')->nullable();
+            $table->string('blog_favicon')->nullable();
             $table->timestamps();
         });
     }
