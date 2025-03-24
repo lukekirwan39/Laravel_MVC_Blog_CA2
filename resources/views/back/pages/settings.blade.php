@@ -17,7 +17,7 @@
         </div>
         <div class="mb-5" x-data="{ tab: 'home'}">
             <div>
-                <ul class="mt-3 mb-5 flex flex-wrap border-b border-white-light dark:border-[#191e3a]">
+                <ul class="mb-5 overflow-y-auto whitespace-nowrap border-b border-[#ebedf2] font-semibold dark:border-[#191e3a] sm:flex">
                     <li class="inline-block">
                         <a href="javascript:;" class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary !border-primary text-primary" :class="{'!border-primary text-primary' : tab == 'home'}" @click="tab='home'">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -29,7 +29,7 @@
                             </svg>
                             General Settings</a>
                     </li>
-                    <li>
+                    <li class="inline-block">
                         <a href="javascript:;" class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary !border-primary text-primary" :class="{'!border-primary text-primary' : tab == 'contact'}" @click="tab='contact'">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ltr:mr-2 rtl:ml-2">
