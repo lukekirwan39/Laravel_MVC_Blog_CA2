@@ -15,6 +15,10 @@ class CreateBlogSocialMediaTable extends Migration
     {
         Schema::create('blog_social_media', function (Blueprint $table) {
             $table->id();
+            $table->string('bsm_facebook')->nullable();
+            $table->string('bsm_instagram')->nullable();
+            $table->string('bsm_youtube')->nullable();
+            $table->string('bsm_linkedin')->nullable();
             $table->timestamps();
         });
     }
