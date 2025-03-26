@@ -48,36 +48,6 @@ class AuthorLoginForm extends Component
         } else {
             session()->flash('fail', 'Incorrect Email/Username or password');
         }
-
-//        $this->validate([
-//            'email' => 'required|email|exists:users,email',
-//            'password' => 'required|min:5',
-//        ], [
-//            'email.required' => 'Enter your email address',
-//            'email.email' => 'Invalid email address',
-//            'email.exists' => 'This email is not registered in database',
-//            'password.required' => 'Password is requried',
-//        ]);
-//
-//        $creds = array('email' =>$this->email, 'password' => $this->password);
-//
-//        if (Auth::guard('web')->attempt($creds)) {
-//            $checkUser = User::where('email', $this->email)->first();
-//            if ($checkUser->blocked == 1) {
-//                Auth::guard('web')->logout();
-//                return redirect()->route('author.login')->with('error', 'Your account has been blocked');
-//            } else {
-//                return redirect()->route('author.home');
-//            }
-//        } else {
-//            session()->flash('fail', 'Incorrect email or password');
-//        }
-//
-//        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-//            return redirect()->route('author.dashboard');
-//        } else {
-//            session()->flash('error', 'Invalid email or password');
-//        }
     }
 
     public function render()
