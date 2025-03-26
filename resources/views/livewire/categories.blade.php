@@ -96,7 +96,7 @@
                                     <tr>
                                         <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->subcategory_name }}</td>
                                         <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->parentcategory->category_name ?? 'N/A' }}</td>
-                                        <td class="px-4 py-2">4</td>
+                                        <td class="px-4 py-2">{{ $subcategory->posts->count() }}</td>
                                         <td class="text-center px-4 py-2">
                                             <button class="text-primary" x-tooltip="Edit"
                                                     wire:click.prevent='editSubCategory({{ $subcategory->id }})'>

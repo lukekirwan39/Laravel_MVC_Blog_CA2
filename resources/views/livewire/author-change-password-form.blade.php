@@ -1,5 +1,5 @@
 <div>
-    <form method="post" wire:submit.prevent="changePassword()">
+    <form method="post" wire:submit.prevent="changePassword()" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
         <div class="row">
             <div class="col-md-4">
                 <div class="mb-3">
