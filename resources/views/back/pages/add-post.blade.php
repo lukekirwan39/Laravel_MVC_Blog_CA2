@@ -31,7 +31,7 @@
                                 <select class="form-select" name="post_category" name="post_category">
                                     <option value="">No selected</option>
                                     @foreach(\App\Models\SubCategory::all() as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category->subcategory_name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger error-text post_category_error"></span>
@@ -113,7 +113,6 @@
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.log(xhr);
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             $.each(xhr.responseJSON.errors, function (prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);

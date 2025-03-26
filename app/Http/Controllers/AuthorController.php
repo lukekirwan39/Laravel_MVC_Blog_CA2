@@ -11,6 +11,8 @@ use App\Models\Setting;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
 
 
 class AuthorController extends Controller
@@ -62,13 +64,30 @@ class AuthorController extends Controller
             'featured_image'=>'required|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
 
-        if ($request->hasFile('featured_image')) {
-            $path = 'images/post_images/';
+
+        if($request->hasFile('featured_image')){
+            $path = "images/post_images/";
             $file = $request->file('featured_image');
             $filename = $file->getClientOriginalName();
             $new_filename = time().'_'.$filename;
 
             $upload = Storage::disk('public')->put($path.$new_filename, (string) file_get_contents($file));
+
+            $post_thumbnails_path = $path.'thumbnails';
+            if( !Storage::disk('public')->exists($post_thumbnails_path) ){
+                Storage::disk('public')->makeDirectory($post_thumbnails_path, 0755, true, true);
+            }
+
+            // Create square thumbnail
+            Image::make( storage_path('app/public/'.$path.$new_filename) )
+                ->fit(200, 200)
+                ->save( storage_path('app/public/'.$path.'thumbnails/'.'thumb_'.$new_filename) );
+
+            // Create resized image
+            Image::make( storage_path('app/public/'.$path.$new_filename) )
+                ->fit(500, 350)
+                ->save( storage_path('app/public/'.$path.'thumbnails/'.'resized_'.$new_filename) );
+
 
             if ($upload){
                 $post = new Post();
