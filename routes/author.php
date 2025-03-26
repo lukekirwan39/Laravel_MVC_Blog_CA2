@@ -20,6 +20,7 @@ Route::prefix('author')->name('author.')->group(function (){
         Route::view('/contact', 'back.pages.contact')->name('contact');
         Route::post('/change-profile-picture', [AuthorController::class, 'changeProfilePicture'])->name('change-profile-picture');
         Route::view('/settings', 'back.pages.settings')->name('settings');
+        Route::view('/categories', 'back.pages.categories')->name('categories');
 
 
         Route::prefix('posts')->name('posts.')->group(function (){

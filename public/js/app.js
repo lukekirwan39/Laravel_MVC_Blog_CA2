@@ -1151,14 +1151,14 @@ function buildURL(url, params, options) {
   if (!params) {
     return url;
   }
-
+  
   const _encode = options && options.encode || encode;
 
   if (utils$1.isFunction(options)) {
     options = {
       serialize: options
     };
-  }
+  } 
 
   const serializeFn = options && options.serialize;
 
@@ -23205,7 +23205,7 @@ process.umask = function() { return 0; };
   \*******************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nError: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.\n    at Re (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/tailwindcss/dist/lib.js:33:1723)\n    at LazyResult.runOnRoot (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:361:16)\n    at LazyResult.runAsync (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:290:26)\n    at async Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:97:14)\n    at processResult (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:891:19)\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:1037:5\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:400:11\n    at /Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:252:18\n    at context.callback (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Users/lukekirwan/Library/CloudStorage/OneDrive-DundalkInstituteofTechnology/Year2/Semester 2/Server-side Development/Assignment 2 - Laravel MVC blog (individual)/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:142:7)");
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nError: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.\n    at Re (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/tailwindcss/dist/lib.js:33:1723)\n    at LazyResult.runOnRoot (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:361:16)\n    at LazyResult.runAsync (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/postcss/lib/lazy-result.js:290:26)\n    at async Object.loader (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:97:14)\n    at processResult (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:891:19)\n    at /Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/webpack/lib/NormalModule.js:1037:5\n    at /Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:400:11\n    at /Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:252:18\n    at context.callback (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Applications/MAMP/htdocs/laravel-8-complete-blog/node_modules/postcss-loader/dist/index.js:142:7)");
 
 /***/ }),
 
@@ -23272,7 +23272,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -23286,17 +23286,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
@@ -23309,7 +23309,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -23318,14 +23318,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	__webpack_require__("./resources/js/app.js");
 /******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__("./resources/css/app.css");
-/******/
+/******/ 	
 /******/ })()
 ;
