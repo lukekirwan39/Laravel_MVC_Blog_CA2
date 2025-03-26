@@ -12,9 +12,6 @@
             <p class="text-3xl font-bold text-primary mt-2">{{ \App\Models\Post::count() }}</p>
         </div>
         <div class="card p-4 shadow">
-            <h3 class="text-lg font-semibold text-gray-700">Pending Comments</h3>
-        </div>
-        <div class="card p-4 shadow">
             <h3 class="text-lg font-semibold text-gray-700">Total Users</h3>
             <p class="text-3xl font-bold text-green-500 mt-2">{{ \App\Models\User::count() }}</p>
         </div>
@@ -23,9 +20,9 @@
     <div class="card p-6 mt-6">
         <h3 class="text-xl font-semibold mb-4">Latest Posts</h3>
         <ul class="space-y-4">
-            @foreach(\App\Models\Post::latest()->take(5)->get() as $post)
+            @foreach(\App\Models\Post::latest()->take(7)->get() as $post)
                 <li class="border-b pb-2">
-                    <span class="text-sm text-gray-500 ml-2">({{ $post->created_at->format('M d, Y') }})</span>
+                    <span class="text-sm text-gray-500 ml-2">({{ $post->updated_at->format('Y, M d') }})</span>
                 </li>
             @endforeach
         </ul>

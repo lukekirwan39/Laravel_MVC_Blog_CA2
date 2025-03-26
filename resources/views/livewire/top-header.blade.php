@@ -43,7 +43,9 @@
                             <ul x-cloak x-show="open" x-transition x-transition.duration.300ms class="absolute top-11 w-[200px] bg-white dark:bg-dark border border-gray-200 dark:border-dark rounded-md shadow-md p-2 text-dark dark:text-white">
                                 <li>
                                     <a href=" {{ route('author.posts.add-post') }}" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">Add New</a>
+                                    <a href=" {{ route('author.posts.all_posts') }}" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">All Posts</a>
                                 </li>
+
                             </ul>
                         </li>
                         <li class="dropdown shrink-0 relative" x-data="{ open: false }" @click.outside="open = false">
