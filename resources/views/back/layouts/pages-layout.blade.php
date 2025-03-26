@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="/images/png-transparent-favicon-buggi-trademark-logo-circle.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/perfect-scrollbar.min.css">
