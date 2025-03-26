@@ -10,7 +10,6 @@
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/perfect-scrollbar.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     <link defer="" rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/animate.css">
@@ -300,7 +299,6 @@
 <script defer="" src="./back/assets/js/alpine-ui.min.js"></script>
 <script defer="" src="./back/assets/js/alpine-focus.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('path/to/ijaboViewer.min.js') }}"></script>
 
 <script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
 

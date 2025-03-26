@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
     <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     @stack('stylesheets')
     @livewireStyles

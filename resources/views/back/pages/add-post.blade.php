@@ -7,24 +7,43 @@
         </a>
     </div>
 
-    <form action="" method="post" id="addPostForm">
+    <form action="{{ route('author.posts.create') }}" method="post"
+          id="addPostForm" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]"
+    enctype="multipart/form-data">
+        @csrf
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="mb-3">
-                            <input type="text" placeholder="Some Text..." class="form-input" required="">
-                        </div>
-                        <div>
-                            <label class="form-label" for="ctnTextarea">Post Content</label>
-                            <textarea name="post_content" id="ctnTextarea" rows="3" class="form-textarea" placeholder="Content..." required=""></textarea>
+                            <label class="form-label" for="ctnTextarea">Post Name</label>
+                            <input type="text" placeholder="Some Text..." class="form-input" name="post_title">
+                            <span class="text-danger error-text post_title_error"></span>
                         </div>
                         <div class="mb-3">
-                            <label for="ctnFile">Featured image</label>
-                            <input id="ctnFile" type="file" class="rtl:file-ml-5 form-input p-0 file:border-0 file:bg-primary/90 file:py-2 file:px-4 file:font-semibold file:text-white file:hover:bg-primary ltr:file:mr-5" required="" name="featured_image">
+                            <label class="form-label" for="ctnTextarea">Post Content</label>
+                            <textarea name="post_content" id="ctnTextarea" rows="3" class="form-textarea" placeholder="Content..." ></textarea>
+                            <span class="text-danger error-text post_content_error"></span>
                         </div>
-                        <div class="image_holder mb-5" style="max-width: 250px;">
-                            <img src="" alt="" class="img-thumbnail" id="image-previewer" data-ijabo-default-image=''>
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <label class="form-label">Post Category</label>
+                                <select class="form-select" name="post_category" name="post_category">
+                                    <option value="">No selected</option>
+                                    @foreach(\App\Models\SubCategory::all() as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error-text post_category_error"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ctnFile">Featured image</label>
+                                <input id="ctnFile" type="file" class="rtl:file-ml-5 form-input p-0 file:border-0 file:bg-primary/90 file:py-2 file:px-4 file:font-semibold file:text-white file:hover:bg-primary ltr:file:mr-5" name="featured_image">
+                                <span class="text-danger error-text featured_image_error"></span>
+                            </div>
+                            <div class="image_holder mb-5" style="max-width: 250px;">
+                                <img src="" alt="" class="img-thumbnail" id="image-previewer" data-ijabo-default-image=''>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Save post</button>
                     </div>
@@ -64,6 +83,44 @@
                     previewImg.src = '';
                     previewImg.style.display = 'none';
                 }
+            });
+
+            $('form#addPostForm').on('submit',function (e) {
+                e.preventDefault();
+                let form = this;
+                let formData = new FormData(form);
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method:$(form).attr('method'),
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $(form).find('span.error-text').text('');
+                    },
+                    success: function (response) {
+                        if (response.code == 1) {
+                            $(form)[0].reset();
+                            $('div.image_holder').html('');
+                        } else {
+                            if (response.errors) {
+                                Object.keys(response.errors).forEach(function (key) {
+                                    $(`.${key}_error`).text(response.errors[key][0]);
+                                });
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            $.each(xhr.responseJSON.errors, function (prefix, val) {
+                                $(form).find('span.' + prefix + '_error').text(val[0]);
+                            });
+                        }
+                    }
+                });
             });
         });
     </script>
