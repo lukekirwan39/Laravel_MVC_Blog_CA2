@@ -215,6 +215,20 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('author.categories') }}" class="nav-link group">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="ltr:pl-3 rtl:pr-3">Categories</span>
+                            </div>
+                        </a>
+                    </li>
+
                     <li class="menu nav-item" x-data="{ open: false }">
                         <button type="button" class="nav-link group" @click="open = !open">
                             <div class="flex items-center">

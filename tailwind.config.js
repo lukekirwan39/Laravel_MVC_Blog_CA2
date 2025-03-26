@@ -29,4 +29,10 @@ module.exports = {
     plugins: [
         require('@tailwindcss/ui'),
     ],
+
+    safelist: [
+        'backdrop-blur-sm',
+        'backdrop-blur-md',
+        'backdrop-blur-lg',
+    ]
 }
