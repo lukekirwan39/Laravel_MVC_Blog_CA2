@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Support\Str;
+use App\Models\Post;
 
 class Categories extends Component
 {
@@ -17,6 +18,11 @@ class Categories extends Component
     public $parent_category;
     public $selected_subcategory_id;
     public $updateSubCategoryMode = false;
+
+    protected $listeners = [
+        'deleteCategoryAction',
+        'deleteSubCategoryAction'
+    ];
 
     public function addCategory()
     {
@@ -132,6 +138,54 @@ class Categories extends Component
     {
         $this->reset(['subcategory_name', 'parent_category', 'selected_subcategory_id', 'updateSubCategoryMode']);
         $this->resetErrorBag();
+    }
+
+    public function deleteCategory($id){
+        $category = Category::findOrFail($id);
+        $this->dispatchBrowserEvent('deleteCategory',[
+            'title'=>'Are you sure?',
+            'html'=>'You want to delete <b>'.$category->category_name.'</b> category',
+            'id'=>$id
+        ]);
+
+    }
+
+    public function deleteSubCategory($id){
+        $subcategory = SubCategory::findOrFail($id);
+        $this->dispatchBrowserEvent('deleteSubCategory',[
+            'title'=>'Are you sure?',
+            'html'=>'You want to delete <b>'.$subcategory->subcategory_name.'</b> sub category',
+            'id'=>$id
+        ]);
+    }
+
+    public function deleteCategoryAction($id){
+
+        $category = Category::where('id', $id)->first();
+        $subcategories = SubCategory::where('parent_category', $category->id)->whereHas('posts')->with('posts')->get();
+
+        if (!empty($subcategories && count($subcategories)>0)){
+            $totalPosts = 0;
+            foreach ($subcategories as $subcat){
+                $totalPosts += Post::where('category_id', $subcat->id)->get()->count();
+            }
+
+        }else{
+            SubCategory::where('parent_category', $category->id)->delete();
+            $category->delete();
+        }
+
+    }
+
+    public function deleteSubCategoryAction($id){
+        $subcategory = SubCategory::where('id',$id)->first();
+        $posts = Post::where('category_id', $subcategory->id)->get()->toArray();
+
+        if (!empty($posts) && count($posts)>0){
+            session()->flash('error', 'You cannot delete this subcategory because it has posts.');
+        }else{
+            $subcategory->delete();
+        }
     }
 
     public function render()

@@ -201,7 +201,10 @@ class AuthorController extends Controller
                 $saved = $post->save();
 
                 if ($saved) {
-                    return response()->json(['code' => 1, 'msg' => 'Post has been updated successfully']);
+                    $this->dispatchBrowserEvent('toast', [
+                        'message' => 'Post updated successfully!',
+                        'type' => 'success' // or 'error'
+                    ]);
                 } else {
                     return response()->json(['code' => 3, 'msg' => 'Something went wrong for updating post']);
                 }

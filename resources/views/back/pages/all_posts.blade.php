@@ -20,7 +20,8 @@
                 showCancelButton: true,
                 cancelButtonText: 'Cancel',
                 confirmButtonText: 'Yes, delete it',
-                cancelButtonColor: '#3085d6',
+                cancelButtonColor:'#d33',
+                confirmButtonColor: '#3085d6',
                 width: '300',
                 allowOutsideClick: false,
             }).then(function (result){

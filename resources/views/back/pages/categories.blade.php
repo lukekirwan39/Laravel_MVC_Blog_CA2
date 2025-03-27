@@ -53,5 +53,43 @@
         window.addEventListener('showSubCategoriesModal', function (){
             Alpine.store('subcategoryModal').open = true;
         })
+
+        window.addEventListener('deleteCategory', function (event) {
+            swal.fire({
+                title:event.detail.title,
+                html:event.detail.message,
+                showCloseButton:true,
+                showCancelButton:true,
+                cancelButtonText:'Cancel',
+                confirmButtonText:'Yes, Delete',
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                width:'300',
+                allowOutsideClick:false,
+            }).then(function(result){
+                if(result.value){
+                    window.livewire.emit('deleteCategoryAction',event.detail.id);
+                }
+            })
+        });
+
+        window.addEventListener('deleteSubCategory', function (event) {
+            swal.fire({
+                title:event.detail.title,
+                html:event.detail.message,
+                showCloseButton:true,
+                showCancelButton:true,
+                cancelButtonText:'Cancel',
+                confirmButtonText:'Yes, Delete',
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                width:'300',
+                allowOutsideClick:false,
+            }).then(function(result){
+                if(result.value){
+                    window.livewire.emit('deleteSubCategoryAction',event.detail.id);
+                }
+            })
+        });
     </script>
 @endpush
