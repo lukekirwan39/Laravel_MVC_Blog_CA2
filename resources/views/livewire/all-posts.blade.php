@@ -1,4 +1,69 @@
 <div class="container mx-auto">
+
+    <form
+        class="mb-6 w-full px-4 sm:px-0"
+        wire:submit.prevent
+    >
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <!-- 🔍 Search Input -->
+            <div class="relative">
+                <input
+                    type="text"
+                    wire:model.debounce.300ms="search"
+                    class="form-input w-full bg-gray-100 dark:bg-gray-800 placeholder:tracking-widest rounded-md pr-10"
+                    placeholder="Search..."
+                >
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+                        <path d="M18.5 18.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 🧾 Category Select -->
+            <div>
+                <select
+                    wire:model="category"
+                    class="form-select w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-white rounded-md shadow-sm focus:ring focus:ring-blue-300"
+                >
+                    <option>---- No selected ----</option>
+                    @foreach(\App\Models\SubCategory::whereHas('posts')->get() as $category)
+                        <option value="{{ $category->id }}">{{ $category->subcategory_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- 👤 Author Select (Only for Admins) -->
+            @if(auth()->user()->type == 1)
+                <div>
+                    <select
+                        wire:model="author"
+                        class="form-select w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-white rounded-md shadow-sm focus:ring focus:ring-blue-300"
+                    >
+                        <option>---- No selected ----</option>
+                        @foreach(\App\Models\User::whereHas('posts')->get() as $author)
+                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+            <!-- 📅 Order Select -->
+            <div>
+                <select
+                    wire:model="orderBy"
+                    class="form-select w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-white rounded-md shadow-sm focus:ring focus:ring-blue-300"
+                >
+                    <option value="asc">ASC</option>
+                    <option value="desc">DESC</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse($posts as $post)
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden" x-data="{ imageModalOpen: false }">

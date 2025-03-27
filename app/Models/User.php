@@ -60,4 +60,9 @@ class User extends Authenticatable
             return asset('back/assets/images/authors/default-img.png');
         }
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class,'author_id','id');
+    }
 }
