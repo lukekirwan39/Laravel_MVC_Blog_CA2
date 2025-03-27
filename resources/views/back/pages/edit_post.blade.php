@@ -7,7 +7,7 @@
         </a>
     </div>
 
-    <form action="{{ route('author.posts.update-post',['post_id'=>Request('post_id')]) }}" method="post"
+    <form action="{{ route('author.posts.update-post',['post_id'=>Request('post_id')]) }}" method="POST"
           id="editPostForm" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]"
           enctype="multipart/form-data">
         @csrf
@@ -101,8 +101,11 @@
                         $(form).find('span.error-text').text('');
                     },
                     success: function (response) {
-                        if (response.code == 1) {
+                        if (parseInt(response.code == 1)) {
+                            console.log("Form submit handler triggered"); // <--- TEST
 
+                            alert("Post updated successfully!");
+                            window.location.href = '/author/posts';
                         } else {
                             if (response.errors) {
                                 Object.keys(response.errors).forEach(function (key) {
@@ -112,6 +115,7 @@
                         }
                     },
                     error: function (xhr, status, error) {
+                        console.log(xhr)
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             $.each(xhr.responseJSON.errors, function (prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
