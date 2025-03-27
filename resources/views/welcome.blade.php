@@ -22,11 +22,9 @@
                                         <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Laravel 8 Blog</h1>
                                         <p class="text-base font-bold leading-normal text-white-dark">A simple and elegant blog powered by Laravel</p>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                                        <a href="{{ route('author.login') }}">
+                                        <a href="{{ route('author.login') }}" class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)] inline-flex items-center justify-center">
                                             Go to Login Page
                                         </a>
-                                    </button>
                                 </div>
                             </form>
                         </div>
