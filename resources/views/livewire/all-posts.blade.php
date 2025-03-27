@@ -1,12 +1,86 @@
 <div class="container mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse($posts as $post)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                <img
-                    src="/storage/images/post_images/thumbnails/resized_{{ $post->featured_image }}"
-                    alt="{{ $post->title }}"
-                    class="w-full h-48 object-cover"
-                >
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden" x-data="{ imageModalOpen: false }">
+                <div x-data="{ imageModalOpen: false }">
+                    <!-- 📸 Thumbnail Image (stays full-size) -->
+                    <img
+                        src="/storage/images/post_images/thumbnails/resized_{{ $post->featured_image }}"
+                        alt="{{ $post->title }}"
+                        class="w-full h-48 object-cover cursor-pointer rounded-lg"
+                        @click="imageModalOpen = true"
+                    >
+
+                    <div class="w-full max-w-5xl bg-white dark:bg-[#121c2c] rounded-2xl shadow-2xl overflow-hidden flex flex-col border dark:border-[#1a2c4a] max-h-[90vh]">
+
+                    <!-- 🖼️ Modal -->
+                        <div
+                            x-show="imageModalOpen"
+                            x-transition
+                            class="fixed inset-0 z-[999] flex items-center justify-center p-4"
+                            style="display: none;"
+                            @click.self="imageModalOpen = false"
+                        >
+                            <!-- 🌫️ BACKDROP -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-black/40 to-blue-900/40 backdrop-blur-lg backdrop-brightness-75 backdrop-saturate-150"></div>
+
+                            <!-- 💬 MODAL CONTENT -->
+                            <div class="relative z-10 w-full max-w-5xl bg-white dark:bg-[#121c2c] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border dark:border-[#1a2c4a]">
+
+                                <!-- Header -->
+                                <div class="flex items-center justify-between px-6 py-4 bg-gray-100 dark:bg-[#1a2c4a] border-b border-gray-200 dark:border-gray-700">
+                                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white truncate">{{ $post->post_title }}</h2>
+                                    <button
+                                        @click="imageModalOpen = false"
+                                        class="text-gray-500 hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400 text-2xl leading-none transition"
+                                        aria-label="Close modal"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+
+                                <!-- Body -->
+                                <div class="flex flex-col lg:flex-row overflow-auto flex-1">
+                                    <!-- Image Section -->
+                                    <div class="lg:w-2/5 bg-gray-50 dark:bg-[#0f1b30] flex items-center justify-center p-6">
+                                        <img
+                                            src="/storage/images/post_images/thumbnails/resized_{{ $post->featured_image }}"
+                                            alt="{{ $post->title }}"
+                                            class="max-w-full max-h-[60vh] object-contain rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
+                                        >
+                                    </div>
+
+                                    <!-- Text Content -->
+                                    <div class="lg:w-3/5 p-6 overflow-y-auto">
+                                        <article class="prose dark:prose-invert prose-lg max-w-none leading-relaxed">
+                                            <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                                                {{ $post->post_content }}
+                                            </p>
+                                        </article>
+
+                                        <!-- Optional Metadata or Footer Info -->
+                                        <div class="mt-6 border-t pt-4 border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-white/70">
+                                            Last updated: {{ $post->updated_at->format('F j, Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="flex justify-end px-6 py-4 bg-gray-100 dark:bg-[#1a2c4a] border-t border-gray-200 dark:border-gray-700">
+                                    <button
+                                        @click="imageModalOpen = false"
+                                        class="btn btn-primary"
+                                    >
+                                        Close Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 <div class="p-4">
                     <div class="mb-5 flex items-center justify-between">
                         <h5 class="text-lg font-semibold dark:text-white-light truncate">{{ $post->post_title }}</h5>
