@@ -245,6 +245,7 @@
                         <ul x-cloak x-show="open" x-collapse class="sub-menu text-gray-500">
                             <li>
                                 <a href={{ route('author.posts.add-post') }}>Add New</a>
+                                <a href=" {{ route('author.posts.all_posts') }}" class="block px-4 py-2 hover:bg-primary/10 hover:text-primary rounded whitespace-nowrap">All Posts</a>
                             </li>
                         </ul>
                     </li>

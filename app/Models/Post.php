@@ -21,6 +21,7 @@ class Post extends Model
         'featured_image',
     ];
 
+
     public function sluggable(): array
     {
         return [
@@ -28,5 +29,12 @@ class Post extends Model
                 'source' => 'post_title'
             ]
         ];
+    }
+
+    public function scopeSearch($query,$term){
+        $term = "%$term%";
+        $query->where(function($query) use ($term){
+            $query->where('post_title','like',$term);
+        });
     }
 }

@@ -128,13 +128,19 @@ class AuthorController extends Controller
 
     public function updatePost(Request $request)
     {
-        if ($request->hasFile('featured_image')) {
+        $post = Post::find($request->post_id);
 
+        // Validate common fields
+        $request->validate([
+            'post_title' => 'required|unique:posts,post_title,' . $post->id,
+            'post_content' => 'required',
+            'post_category' => 'required|exists:sub_categories,id',
+        ]);
+
+        // Handle image upload (optional)
+        if ($request->hasFile('featured_image')) {
             $request->validate([
-                'post_title' => 'required|unique:posts,post_title,' . $request->post_id,
-                'post_content' => 'required',
-                'post_category' => 'required|exists:sub_categories,id',
-                'featured_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:1024',
+                'featured_image' => 'mimes:jpeg,png,jpg,gif,svg|max:1024',
             ]);
 
             $path = "images/post_images/";
@@ -144,54 +150,40 @@ class AuthorController extends Controller
 
             $upload = Storage::disk('public')->put($path . $new_filename, (string)file_get_contents($file));
 
-            $post_thumbnails_path = $path . 'thumbnails';
-            if (!Storage::disk('public')->exists($post_thumbnails_path)) {
-                Storage::disk('public')->makeDirectory($post_thumbnails_path, 0755, true, true);
-            }
-
-            Image::make(storage_path('app/public/' . $path . $new_filename))
-                ->fit(200, 200)
-                ->save(storage_path('app/public/' . $path . 'thumbnails/' . 'thumb_' . $new_filename));
-
-            Image::make(storage_path('app/public/' . $path . $new_filename))
-                ->fit(500, 350)
-                ->save(storage_path('app/public/' . $path . 'thumbnails/' . 'resized_' . $new_filename));
-
             if ($upload) {
-                $old_post_image = Post::find($request->post_id)->featured_image;
-
-                if ($old_post_image != null && Storage::disk('public')->exists($path . $old_post_image)) {
-                    Storage::disk('public')->delete($path . $old_post_image);
-
-                    if (Storage::disk('public')->exists($path . 'thumbnails/resized_' . $old_post_image)) {
-                        Storage::disk('public')->delete($path . 'thumbnails/' . 'resized_' . $old_post_image);
-                    }
-
-                    if (Storage::disk('public')->exists($path . 'thumbnails/thumb_' . $old_post_image)) {
-                        Storage::disk('public')->delete($path . 'thumbnails/' . 'thumb_' . $old_post_image);
-                    }
+                // Create thumbnails
+                $thumbnailPath = $path . 'thumbnails/';
+                if (!Storage::disk('public')->exists($thumbnailPath)) {
+                    Storage::disk('public')->makeDirectory($thumbnailPath, 0755, true, true);
                 }
 
-                $post = Post::find($request->post_id);
-                $post->category_id = $request->post_category;
-                $post->post_title = $request->post_title;
-                $post->post_slug = null;
-                $post->post_content = $request->post_content;
+                Image::make(storage_path('app/public/' . $path . $new_filename))
+                    ->fit(200, 200)
+                    ->save(storage_path('app/public/' . $thumbnailPath . 'thumb_' . $new_filename));
+
+                Image::make(storage_path('app/public/' . $path . $new_filename))
+                    ->fit(500, 350)
+                    ->save(storage_path('app/public/' . $thumbnailPath . 'resized_' . $new_filename));
+
+                // Delete old image
+                $oldImage = $post->featured_image;
+                if ($oldImage && Storage::disk('public')->exists($path . $oldImage)) {
+                    Storage::disk('public')->delete($path . $oldImage);
+                    Storage::disk('public')->delete($thumbnailPath . 'resized_' . $oldImage);
+                    Storage::disk('public')->delete($thumbnailPath . 'thumb_' . $oldImage);
+                }
+
                 $post->featured_image = $new_filename;
-                $saved = $post->save();
+            }
+        }
 
-                if ($saved) {
-                    return response()->json(['code' => 1, 'msg' => 'Post has been updated successfully']);
-                } else {
-                    return response()->json(['code' => 3, 'msg' => 'Something went wrong for uploading featured image']);
-                }
+        // Update post fields
+        $post->category_id = $request->post_category;
+        $post->post_title = $request->post_title;
+        $post->post_slug = null;
+        $post->post_content = $request->post_content;
 
-            } else {
-                $request->validate([
-                    'post_title' => 'required|unique:posts,post_title,' . $request->post_id,
-                    'post_content' => 'required',
-                    'post_category' => 'required|exists:sub_categories,id',
-                ]);
+        $saved = $post->save();
 
                 $post = Post::find($request->post_id);
                 $post->category_id = $request->post_category;
@@ -211,4 +203,5 @@ class AuthorController extends Controller
             }
         }
     }
+
 }
