@@ -185,10 +185,22 @@ class AuthorController extends Controller
 
         $saved = $post->save();
 
-        if ($saved) {
-            return response()->json(['code' => 1, 'msg' => 'Post has been updated successfully']);
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong while updating the post']);
+                $post = Post::find($request->post_id);
+                $post->category_id = $request->post_category;
+                $post->post_slug = null;
+                $post->post_content = $request->post_content;
+                $post->post_title = $request->post_title;
+                $saved = $post->save();
+
+                if ($saved) {
+                    $this->dispatchBrowserEvent('toast', [
+                        'message' => 'Post updated successfully!',
+                        'type' => 'success' // or 'error'
+                    ]);
+                } else {
+                    return response()->json(['code' => 3, 'msg' => 'Something went wrong for updating post']);
+                }
+            }
         }
     }
 
