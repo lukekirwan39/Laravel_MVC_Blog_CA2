@@ -16,6 +16,7 @@
                 </div>
                 <div class="hidden ltr:mr-2 rtl:ml-2 sm:block">
                     <ul class="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
+
                         <li class="nav-item">
                             <a href="{{ route( 'author.home') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
                             <span class="nav-link-title">
@@ -23,6 +24,7 @@
                             </span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="{{ route( 'author.categories') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
                             <span class="nav-link-title">
@@ -30,6 +32,17 @@
                             </span>
                             </a>
                         </li>
+
+                        @if(auth()->user()->type == 1)
+                            <li class="nav-item">
+                                <a href="{{ route( 'author.authors') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                            <span class="nav-link-title">
+                                Authors
+                            </span>
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="dropdown shrink-0 relative" x-data="{ open: false }" @click.outside="open = false">
                             <!-- Dropdown Trigger -->
                             <a href="javascript:;" class="flex items-center gap-1 rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="open = !open">
