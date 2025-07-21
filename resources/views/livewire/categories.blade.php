@@ -39,7 +39,11 @@
                                             </button>
                                         </td>
                                         <td class="text-center px-4 py-2">
-                                            <button wire:click.prevent="deleteCategory({{ $category->id }})" type="button" x-tooltip="Delete" class="text-danger">
+                                            <button
+                                                type="button"
+                                                @click="$dispatch('confirm-delete-category', { id: {{ $category->id }}, name: @js($category->category_name) })"
+                                                class="text-danger"
+                                            >
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto">
                                                     <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
@@ -108,7 +112,11 @@
                                             </button>
                                         </td>
                                         <td class="text-center px-4 py-2">
-                                            <button wire:click.prevent="deleteSubCategory({{ $subcategory->id }})" type="button" x-tooltip="Delete" class="text-danger">
+                                            <button
+                                                type="button"
+                                                @click="$dispatch('confirm-delete-subcategory', { id: {{ $subcategory->id }}, name: @js($subcategory->subcategory_name) })"
+                                                class="text-danger"
+                                            >
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto">
                                                     <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
@@ -192,6 +200,58 @@
         </div>
     </div>
 
+    <div x-data="{ open: false, id: null, name: '' }"
+         x-show="open"
+         x-transition
+         class="fixed inset-0 z-[999] flex items-center justify-center bg-black/60"
+         style="display: none;"
+         wire:ignore
+         @click.self="open = false"
+         @confirm-delete-category.window="
+        id = $event.detail.id;
+        name = $event.detail.name;
+        open = true;
+     "
+    >
+        <div wire:ignore.self class="panel w-full max-w-lg overflow-hidden rounded-lg border-0 p-0 bg-white dark:bg-[#121c2c]">
+            <div class="flex items-center justify-between px-5 py-3 border-b">
+                <h5 class="text-lg font-bold">Delete Category</h5>
+                <button @click="open = false" class="text-gray-600 hover:text-black">✕</button>
+            </div>
+
+            <div class="p-5">
+                <p class="text-base text-gray-700 dark:text-white-dark/70 mb-6">
+                    Are you sure you want to delete "<span x-text="name"></span>"?
+                </p>
+
+                <div class="mt-8 flex items-center justify-between">
+                    <!-- Left-aligned Cancel button -->
+                    <button
+                        type="button"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 transition"
+                        @click="open = false"
+                    >
+                        Cancel
+                    </button>
+
+                    <!-- Right-aligned Confirm Delete button -->
+                    <div class="flex items-center gap-x-4">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="
+                            window.livewire.emit('deleteCategoryAction', id);
+                            open = false;
+                        "
+                        >
+                            Yes, Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div x-data
          x-show="$store.subcategoryModal.open"
          x-transition
@@ -258,6 +318,58 @@
                 </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div x-data="{ open: false, id: null, name: '' }"
+         x-show="open"
+         x-transition
+         class="fixed inset-0 z-[999] flex items-center justify-center bg-black/60"
+         style="display: none;"
+         wire:ignore
+         @click.self="open = false"
+         @confirm-delete-subcategory.window="
+        id = $event.detail.id;
+        name = $event.detail.name;
+        open = true;
+     "
+    >
+        <div wire:ignore.self class="panel w-full max-w-lg overflow-hidden rounded-lg border-0 p-0 bg-white dark:bg-[#121c2c]">
+            <div class="flex items-center justify-between px-5 py-3 border-b">
+                <h5 class="text-lg font-bold">Delete Subcategory</h5>
+                <button @click="open = false" class="text-gray-600 hover:text-black">✕</button>
+            </div>
+
+            <div class="p-5">
+                <p class="text-base text-gray-700 dark:text-white-dark/70 mb-6">
+                    Are you sure you want to delete "<span x-text="name">{{$subcategory->subcategory_name}}</span>"?
+                </p>
+
+                <div class="mt-8 flex items-center justify-between">
+                    <!-- Left-aligned Cancel button -->
+                    <button
+                        type="button"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 transition"
+                        @click="open = false"
+                    >
+                        Cancel
+                    </button>
+
+                    <!-- Right-aligned Confirm Delete button -->
+                    <div class="flex items-center gap-x-4">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="
+                            window.livewire.emit('deleteSubCategoryAction', id);
+                            open = false;
+                        "
+                        >
+                            Yes, Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

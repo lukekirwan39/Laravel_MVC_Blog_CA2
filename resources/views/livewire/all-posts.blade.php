@@ -10,10 +10,10 @@
                 <input
                     type="text"
                     wire:model.debounce.300ms="search"
-                    class="form-input w-full bg-gray-100 dark:bg-gray-800 placeholder:tracking-widest rounded-md pr-10"
+                    class="form-input w-full bg-gray-100 dark:bg-gray-800 placeholder:tracking-widest rounded-md pr-10 pl-10"
                     placeholder="Search..."
                 >
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 pointer-events-none">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none">
                         <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
                         <path d="M18.5 18.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -160,17 +160,19 @@
                                     </svg>
                                 </button>
                             </a>
-                            <a href="" wire:click.prevent="deletePost({{ $post->id }})">
-                                <button type="button" class="text-danger hover:text-danger-dark" x-tooltip="Delete">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                        <path d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                        <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                        <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                        <path opacity="0.5" d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="currentColor" stroke-width="1.5"></path>
-                                    </svg>
-                                </button>
-                            </a>
+                            <button
+                                type="button"
+                                @click="$dispatch('confirm-delete-post', { id: {{ $post->id }}, title: @js($post->post_title) })"
+                                class="text-danger hover:text-danger-dark"
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path opacity="0.5" d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="currentColor" stroke-width="1.5"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -180,6 +182,56 @@
                 <span class="text-danger dark:text-danger-light">No post(s) found</span>
             </div>
         @endforelse
+    </div>
+
+    <div x-data="{ open: false, id: null, title: '' }"
+         x-show="open"
+         x-transition
+         class="fixed inset-0 z-[999] flex items-center justify-center bg-black/60"
+         style="display: none;"
+         wire:ignore
+         @click.self="open = false"
+         @confirm-delete-post.window="
+        id = $event.detail.id;
+        title = $event.detail.title;
+        open = true;
+     "
+    >
+        <div wire:ignore.self class="panel w-full max-w-lg overflow-hidden rounded-lg border-0 p-0 bg-white dark:bg-[#121c2c]">
+            <div class="flex items-center justify-between px-5 py-3 border-b">
+                <h5 class="text-lg font-bold">Delete Post</h5>
+                <button @click="open = false" class="text-gray-600 hover:text-black">✕</button>
+            </div>
+
+            <div class="p-5">
+                <p class="text-base text-gray-700 dark:text-white-dark/70 mb-6">
+                    Are you sure you want to delete "<span x-text="title"></span>"?
+                </p>
+
+                <div class="mt-8 flex items-center justify-between">
+                    <button
+                        type="button"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 transition"
+                        @click="open = false"
+                    >
+                        Cancel
+                    </button>
+
+                    <div class="flex items-center gap-x-4">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="
+                            window.livewire.emit('deletePostAction', id);
+                            open = false;
+                        "
+                        >
+                            Yes, Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="mt-6 flex justify-center">

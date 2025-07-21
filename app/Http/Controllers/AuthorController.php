@@ -6,13 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
-use App\Models\Setting;
 
 use App\Models\Post;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageManager;
 
 
 class AuthorController extends Controller
@@ -113,10 +110,11 @@ class AuthorController extends Controller
         }
     }
 
-    public function editPost(Request $request){
-        if(!request()->post_id){
+    public function editPost(Request $request)
+    {
+        if (!request()->post_id) {
             return abort(404);
-        }else{
+        } else {
             $post = Post::find(request()->post_id);
             $data = [
                 'post' => $post,
@@ -185,23 +183,20 @@ class AuthorController extends Controller
 
         $saved = $post->save();
 
-                $post = Post::find($request->post_id);
-                $post->category_id = $request->post_category;
-                $post->post_slug = null;
-                $post->post_content = $request->post_content;
-                $post->post_title = $request->post_title;
-                $saved = $post->save();
+        $post = Post::find($request->post_id);
+        $post->category_id = $request->post_category;
+        $post->post_slug = null;
+        $post->post_content = $request->post_content;
+        $post->post_title = $request->post_title;
+        $saved = $post->save();
 
-                if ($saved) {
-                    $this->dispatchBrowserEvent('toast', [
-                        'message' => 'Post updated successfully!',
-                        'type' => 'success' // or 'error'
-                    ]);
-                } else {
-                    return response()->json(['code' => 3, 'msg' => 'Something went wrong for updating post']);
-                }
-            }
+        if ($saved) {
+            $this->dispatchBrowserEvent('toast', [
+                'message' => 'Post updated successfully!',
+                'type' => 'success'
+            ]);
+        } else {
+            return response()->json(['code' => 3, 'msg' => 'Something went wrong for updating post']);
         }
     }
-
 }
