@@ -45,7 +45,16 @@
                                 <img src="/storage/images/post_images/thumbnails/resized_{{ $post->featured_image }}" alt="" class="img-thumbnail" id="image-previewer">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update post</button>
+                        <div class="flex items-center gap-4 mt-6">
+                            <button type="submit" class="btn btn-primary">Update Post</button>
+                            <button
+                                type="button"
+                                onclick="window.location.href='/author/posts/all'"
+                                class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 dark:bg-[#1f2937] dark:border-gray-600 dark:text-white transition"
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
