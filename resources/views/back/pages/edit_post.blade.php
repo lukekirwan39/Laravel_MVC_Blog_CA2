@@ -75,7 +75,14 @@
 
                 if (file) {
                     if (!allowedTypes.includes(file.type)) {
-                        alert('Only JPG, JPEG, and PNG files are allowed.');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Invalid File Type',
+                            text: 'Only JPG, JPEG, and PNG files are allowed for image updates.',
+                            confirmButtonText: 'Got it',
+                            padding: '10px 20px'
+                        });
+
                         this.value = ''; // Clear input
                         previewImg.src = '';
                         previewImg.style.display = 'none';
@@ -110,24 +117,61 @@
                         $(form).find('span.error-text').text('');
                     },
                     success: function (response) {
-                        if (parseInt(response.code == 1)) {
-                            console.log("Form submit handler triggered"); // <--- TEST
-
-                            alert("Post updated successfully!");
-                            window.location.href = '/author/posts';
+                        if (parseInt(response.code) === 1) {
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Post updated successfully!',
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 1000,
+                                padding: '10px 20px'
+                            }).then(() => {
+                                window.location.href = '/author/posts/all';
+                            });
                         } else {
                             if (response.errors) {
                                 Object.keys(response.errors).forEach(function (key) {
                                     $(`.${key}_error`).text(response.errors[key][0]);
                                 });
+
+                                Swal.fire({
+                                    toast: true,
+                                    icon: 'error',
+                                    title: 'Please fix the form errors',
+                                    position: 'top',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    padding: '10px 20px'
+                                });
                             }
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.log(xhr)
+                        console.log(xhr);
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             $.each(xhr.responseJSON.errors, function (prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
+                            });
+
+                            Swal.fire({
+                                toast: true,
+                                icon: 'error',
+                                title: 'Something went wrong. Check the form.',
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                padding: '10px 20px'
+                            });
+                        } else {
+                            Swal.fire({
+                                toast: true,
+                                icon: 'error',
+                                title: 'Unexpected server error',
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                padding: '10px 20px'
                             });
                         }
                     }

@@ -149,7 +149,6 @@ class AuthorController extends Controller
             $upload = Storage::disk('public')->put($path . $new_filename, (string)file_get_contents($file));
 
             if ($upload) {
-                // Create thumbnails
                 $thumbnailPath = $path . 'thumbnails/';
                 if (!Storage::disk('public')->exists($thumbnailPath)) {
                     Storage::disk('public')->makeDirectory($thumbnailPath, 0755, true, true);
@@ -183,20 +182,10 @@ class AuthorController extends Controller
 
         $saved = $post->save();
 
-        $post = Post::find($request->post_id);
-        $post->category_id = $request->post_category;
-        $post->post_slug = null;
-        $post->post_content = $request->post_content;
-        $post->post_title = $request->post_title;
-        $saved = $post->save();
-
         if ($saved) {
-            $this->dispatchBrowserEvent('toast', [
-                'message' => 'Post updated successfully!',
-                'type' => 'success'
-            ]);
+            return response()->json(['code' => 1]); // ✅ Return JSON response here
         } else {
-            return response()->json(['code' => 3, 'msg' => 'Something went wrong for updating post']);
+            return response()->json(['code' => 3, 'msg' => 'Something went wrong while updating the post']);
         }
     }
 }

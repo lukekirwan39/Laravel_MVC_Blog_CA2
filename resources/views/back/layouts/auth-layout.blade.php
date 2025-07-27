@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link rel="icon" type="image/x-icon" href="/images/png-transparent-favicon-buggi-trademark-logo-circle.xcf">
+    <link rel="icon" type="image/x-icon" href="/images/pngegg.png">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     @stack('stylesheets')
     @livewireStyles
