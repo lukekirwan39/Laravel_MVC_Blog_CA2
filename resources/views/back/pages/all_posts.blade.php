@@ -30,5 +30,31 @@
                 }
             })
         })
+
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('postDeleted', () => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    title: 'Post deleted successfully!',
+                    position: 'top',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    padding: '10px 20px'
+                })
+            });
+
+            Livewire.on('deleteFailed', () => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'error',
+                    title: 'Something went wrong. Post not deleted.',
+                    position: 'top',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    padding: '10px 20px'
+                });
+            });
+        });
     </script>
 @endpush

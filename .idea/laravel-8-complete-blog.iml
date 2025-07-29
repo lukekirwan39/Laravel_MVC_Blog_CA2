@@ -126,5 +126,6 @@
     <orderEntry type="library" name="alpinejs" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="sweetalert2" level="application" />
   </component>
 </module>

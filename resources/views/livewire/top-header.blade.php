@@ -4,7 +4,8 @@
             <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
                 <div class="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                     <a href="{{ route( 'author.home') }}" class="main-logo flex shrink-0 items-center">
-                        <img class="inline w-12 ltr:-ml-1 rtl:-mr-1" src="https://img.freepik.com/premium-vector/blog-word-text-cut-from-paper-flat-design_100655-3169.jpg" alt="image">                    </a>
+                        <img class="inline w-12 ltr:-ml-1 rtl:-mr-1" src="/images/pngegg.png" alt="Blog icon">
+                    </a>
 
                     <a href="javascript:;" class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden" @click="$store.app.toggleSidebar()">
                         <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,6 +17,7 @@
                 </div>
                 <div class="hidden ltr:mr-2 rtl:ml-2 sm:block">
                     <ul class="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
+
                         <li class="nav-item">
                             <a href="{{ route( 'author.home') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
                             <span class="nav-link-title">
@@ -23,6 +25,7 @@
                             </span>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="{{ route( 'author.categories') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
                             <span class="nav-link-title">
@@ -30,6 +33,17 @@
                             </span>
                             </a>
                         </li>
+
+                        @if(auth()->user()->type == 1)
+                            <li class="nav-item">
+                                <a href="{{ route( 'author.authors') }}" class="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                            <span class="nav-link-title">
+                                Authors
+                            </span>
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="dropdown shrink-0 relative" x-data="{ open: false }" @click.outside="open = false">
                             <!-- Dropdown Trigger -->
                             <a href="javascript:;" class="flex items-center gap-1 rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="open = !open">

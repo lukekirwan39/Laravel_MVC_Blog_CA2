@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link rel="icon" type="image/x-icon" href="/images/png-transparent-favicon-buggi-trademark-logo-circle.png">
+    <link rel="icon" type="image/x-icon" href="/images/pngegg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/perfect-scrollbar.min.css">
@@ -18,8 +18,10 @@
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
     <script defer="" src="./back/assets/js/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script defer="" src="./back/assets/js/tippy-bundle.umd.min.js"></script>
     <script defer="" src="./back/assets/js/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
