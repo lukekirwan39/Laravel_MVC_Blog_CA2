@@ -4,10 +4,22 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Nette\Utils\Random;
+use Illuminate\Support\Facades\Mail;
 
 class Authors extends Component
 {
     public $name, $email, $username, $author_type, $direct_publisher;
+
+    protected $listeners = [
+        'resetForm'
+    ];
+
+    public function resetForm(){
+        $this->name = $this->email = $this->username = $this->author_type = $this->direct_publisher = null;
+        $this->resetErrorBag();
+    }
 
     public function addAuthor(){
         $this->validate([
@@ -21,22 +33,76 @@ class Authors extends Component
             'direct_publisher.required'=>'Specify author publication access',
         ]);
 
-        User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'username' => $this->username,
-            'author_type' => $this->author_type,
-            'direct_publisher' => $this->direct_publisher,
-        ]);
+        if ($this->isOnline()) {
+            $default_password = Random::generate(8);
 
-        session()->flash('message', 'Author added successfully.');
-        $this->reset(['name', 'email', 'username', 'author_type', 'direct_publisher']);
+            $author = new User();
+            $author->name = $this->name;
+            $author->email = $this->email;
+            $author->username = $this->username;
+            $author->password = Hash::make($default_password);
+            $author->type = $this->author_type;
+            $author->direct_publish = $this->direct_publisher;
+            $saved = $author->save();
+
+            $data = array(
+                'name' => $this->name,
+                'email' => $this->email,
+                'username' => $this->username,
+                'password' => $default_password,
+                'url' => route('author.profile'),
+            );
+
+            $author_email = $this->email;
+            $author_name = $this->name;
+
+            if ($saved) {
+                Mail::send('new-author-email-template', $data, function ($message) use ($author_email, $author_name) {
+                    $message->from('noreply@example.com', 'Larablog');
+                    $message->to($author_email, $author_name)
+                        ->subject('New Author Account Created');
+                });
+
+                $this->dispatchBrowserEvent('swal:success', [
+                    'title' => 'Success',
+                    'text' => 'Author account created successfully. An email has been sent with login details.',
+                ]);
+
+                $this->dispatchBrowserEvent('hide_add_author_modal');
+
+                $this->reset(['name', 'email', 'username', 'author_type', 'direct_publisher']);
+            } else {
+                $this->dispatchBrowserEvent('swal:error', [
+                    'title' => 'Failed',
+                    'text' => 'Failed to create author account. Please try again.',
+                ]);
+            }
+
+        } else {
+            $this->dispatchBrowserEvent('swal:error', [
+                'title' => 'Offline',
+                'text' => 'You are offline, please check your internet connection',
+            ]);
+        }
+
+    }
+
+    public function editAuthor($author){
+        dd('Open edit author modal', $author);
+    }
+
+    public function isOnline($site = "https://youtube.com/"){
+        if (@fopen($site, "r")) {
+            return true; // Site is online
+        } else {
+            return false; // Site is offline
+        }
     }
 
     public function render()
     {
         return view('livewire.authors',[
-            'authors'=>User::where('id','!=', auth()->id())->get()
+            'authors'=>User::where('id','!=', auth()->id())->get(),
         ]);
     }
 }

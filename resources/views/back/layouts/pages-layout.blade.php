@@ -18,6 +18,7 @@
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
     <script defer="" src="./back/assets/js/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script defer="" src="./back/assets/js/tippy-bundle.umd.min.js"></script>
     <script defer="" src="./back/assets/js/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

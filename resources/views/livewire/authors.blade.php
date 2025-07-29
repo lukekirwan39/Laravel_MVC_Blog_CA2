@@ -8,7 +8,7 @@
                 <h2 class="text-xl">Authors</h2>
                 <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
                     <div class="flex gap-3">
-                        <div x-data="authors">
+                        <div wire:ignore.self class="modal modal-blur fade" id="add_author_modal">
                             <button type="button" class="btn btn-primary" @click="editUser">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ltr:mr-2 rtl:ml-2">
@@ -39,9 +39,14 @@
                                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                                             </svg>
                                         </button>
-                                        <h3 class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]"
-                                            x-text="params.id ? 'Edit Author' : 'Add Author'">Add Author</h3>
-                                        <div class="p-5">
+                                        <h3 class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]">Add Author</h3>
+                                        <div
+                                            x-show="addAuthorModal"
+                                            x-transition
+                                            @keydown.escape.window="closeModal()"
+                                            @click.self="closeModal()"
+                                            class="p-5"
+                                        >
                                             <form wire:submit.prevent="addAuthor()" method="post"
                                                   class="space-y-5">
                                                 <div class="mb-5">
@@ -89,7 +94,7 @@
 
 
                                                 <div class="mt-8 flex items-center justify-end">
-                                                    <button type="button" class="btn btn-outline-danger" @click="addAuthorModal = false">Close</button>
+                                                    <button type="button" class="btn btn-outline-danger" @click="addAuthorModal = false" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4" >Save</button>
                                                 </div>
                                             </form>
@@ -142,7 +147,7 @@
                         </div>
                     </div>
 
-                    <div x-data="authorSearch()" x-init="init()" class="relative">
+                    <div x-init="init()" class="relative">
                         <input
                             type="text"
                             placeholder="Search Authors"
@@ -163,58 +168,58 @@
                 </div>
             </div>
             <div class="panel mt-5 overflow-hidden border-0 p-0">
-                <template x-if="displayType === 'list'">
+                <div x-show="displayType === 'list'" class="table-responsive">
                     <div class="table-responsive">
-                        <table class="table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Type</th>
-                                <th class="!text-center">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($authors as $author)
+                            <table class="table-striped table-hover">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <div class="flex items-center gap-3">
-                                            <span class="block h-8 w-8 rounded-full bg-cover bg-center"
-                                                  style="background-image: url('{{ $author->picture ?? asset('images/default-user.png') }}');"></span>
-                                            <div>{{ $author->name }}</div>
-                                        </div>
-                                    </td>
-                                    <td>{{ $author->email }}</td>
-                                    <td>
-                                        <div class="mt-3">
-                                            <span
-                                                class="text-primary whitespace-normal break-words">{{ $author->authorType->name }}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center justify-center gap-4">
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    @click="editUser({{ json_encode($author) }})">
-                                                Edit
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-danger"
-                                                    @click="deleteUser({{ json_encode($author) }})">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Type</th>
+                                    <th class="!text-center">Actions</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center text-danger py-4">No Author Found!</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </template>
+                                </thead>
+                                <tbody>
+                                @forelse($authors as $author)
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <span class="block h-8 w-8 rounded-full bg-cover bg-center"
+                                                      style="background-image: url('{{ $author->picture ?? asset('images/default-user.png') }}');"></span>
+                                                <div>{{ $author->name }}</div>
+                                            </div>
+                                        </td>
+                                        <td>{{ $author->email }}</td>
+                                        <td>
+                                            <div class="mt-3">
+                                                <span
+                                                    class="text-primary whitespace-normal break-words">{{ $author->authorType->name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center justify-center gap-4">
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        wire:click.prevent="editAuthor({{ $author }})">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        @click="deleteUser({{ json_encode($author) }})">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-danger py-4">No Author Found!</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
             </div>
-            <template x-if="displayType === 'grid'">
+            <div x-show="displayType === 'grid'">
                 <div class="my-5 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     @forelse($authors as $author)
                         <div class="relative overflow-hidden rounded-md bg-white text-center shadow dark:bg-[#1c232f] transition hover:shadow-lg">
@@ -316,8 +321,90 @@
                                 </div>
                             </div>
 
+
                             <div class="absolute bottom-0 flex w-full gap-4 p-6">
-                                <button type="button" class="btn btn-outline-primary w-1/2" onclick="editUser({{ $author->id }})">Edit</button>
+                                <button type="button" class="btn btn-outline-primary w-1/2">Edit</button>
+
+                                <!-- Edit Author Modal -->
+                                <div class="fixed inset-0 z-[999] hidden overflow-y-auto bg-[black]/60"
+                                     :class="addAuthorModal &amp;&amp; '!block'" wire:ignore.self id="edit_author_modal">
+                                    <div class="flex min-h-screen items-center justify-center px-4" @click.self="addAuthorModal = false">
+                                        <div x-show="addAuthorModal" x-transition="" x-transition.duration.300=""
+                                             class="panel my-8 w-[90%] max-w-lg overflow-hidden rounded-lg border-0 p-0 md:w-full"
+                                             style="display: none;">
+                                            <button type="button" class="absolute top-4 text-white-dark hover:text-dark ltr:right-4 rtl:left-4" @click="addAuthorModal = false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="h-6 w-6">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </button>
+                                            <h3 class="bg-[#fbfbfb] py-3 text-lg font-medium ltr:pl-5 ltr:pr-[50px] rtl:pr-5 rtl:pl-[50px] dark:bg-[#121c2c]">Edit Author</h3>
+                                            <div x-show="addAuthorModal" x-transition @keydown.escape.window="closeModal()" @click.self="closeModal()" class="p-5">
+                                                <form wire:submit.prevent="updateAuthor()" method="post" class="space-y-5">
+                                                    <input type="text" wire:model="selected_author_id">
+                                                    <div class="mb-5">
+                                                        <label for="name">Name</label>
+                                                        <input id="name" type="text" placeholder="Enter author name" class="form-input" wire:model="name">
+                                                        <span class="text-danger">@error('name'){{ $message }}@enderror</span>
+                                                    </div>
+                                                    <div class="mb-5">
+                                                        <label for="email">Email</label>
+                                                        <input id="email" type="text" placeholder="Enter author email" class="form-input" wire:model="email">
+                                                        <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+                                                    </div>
+                                                    <div class="mb-5">
+                                                        <label for="number">Username</label>
+                                                        <input id="number" type="text" placeholder="Enter author username" class="form-input" wire:model="username">
+                                                        <span class="text-danger">@error('username'){{ $message }}@enderror</span>
+                                                    </div>
+                                                    <div class="form-group mb-5">
+                                                        <label class="form-label">Author Type</label>
+                                                        <div>
+                                                            <select class="form-select" wire:model="author_type">
+                                                                @foreach(\App\Models\Type::all() as $type)
+                                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <span class="text-danger">@error('author_type'){{ $message }}@enderror</span>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label block mb-2">Is direct publisher?</label>
+                                                        <div class="flex gap-6">
+                                                            <label class="inline-flex items-center">
+                                                                <input type="radio" name="direct_publisher" value="0" class="form-check-input mr-2" wire:model="direct_publisher">
+                                                                <span class="form-check-label">No</span>
+                                                            </label>
+                                                            <label class="inline-flex items-center">
+                                                                <input type="radio" name="direct_publisher" value="1" class="form-check-input mr-2" wire:model="direct_publisher">
+                                                                <span class="form-check-label">Yes</span>
+                                                            </label>
+                                                        </div>
+                                                        <span class="text-danger">@error('direct_publisher'){{ $message }}@enderror</span>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <div >Blocked</div>
+                                                        <label class="w-12 h-6 relative">
+                                                            <input type="checkbox" class="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox4" />
+                                                            <span for="custom_switch_checkbox4" class="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="mt-8 flex items-center justify-end">
+                                                        <button type="button" class="btn btn-outline-danger" @click="addAuthorModal = false" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4" >Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <button type="button" class="btn btn-outline-danger w-1/2" @click="deleteUser({{ $author->id }})">Delete</button>
                             </div>
                         </div>
@@ -325,7 +412,7 @@
                         <div class="col-span-full text-center text-danger py-4">No Author Found!</div>
                     @endforelse
                 </div>
-            </template>
+            </div>
         </div>
         <!-- end main content section -->
 

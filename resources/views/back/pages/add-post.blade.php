@@ -130,7 +130,7 @@
                                     icon: 'error',
                                     title: 'Please fix the form errors',
                                     showConfirmButton: false,
-                                    timer: 3000,
+                                    timer: 1500,
                                     padding: '10px 20px'
                                 });
                             }
@@ -149,7 +149,7 @@
                                 title: 'Something went wrong. Check the form.',
                                 position: 'top',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                                 padding: '10px 20px'
                             });
                         } else {
@@ -159,7 +159,7 @@
                                 title: 'Unexpected server error',
                                 position: 'top',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                                 padding: '10px 20px'
                             });
                         }

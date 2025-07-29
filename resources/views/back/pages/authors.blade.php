@@ -10,58 +10,33 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('authors', () => ({
-                // Default author fields
-                defaultParams: {
-                    id: null,
-                    name: '',
-                    email: '',
-                    role: '',
-                    phone: '',
-                    location: '',
-                },
-
                 // UI State
                 displayType: 'list',
                 addAuthorModal: false,
 
-                // Form and Data State
-                params: {
-                    id: null,
-                    name: '',
-                    email: '',
-                    role: '',
-                    phone: '',
-                    location: '',
-                },
-                searchUser: '',
-                authorList: [],
-                filteredAuthorsList: [],
+                // Form Params
+                defaultParams: {},
+                params: {},
 
                 init() {
-                    this.filteredAuthorsList = this.authorList;
-                    this.$watch('searchUser', () => this.searchAuthors());
-                },
+                    this.$watch('addAuthorModal', (val) => {
+                        if (!val) {
+                            Livewire.emit('resetForm');
+                        }
+                    });
 
-                searchAuthors() {
-                    const keyword = this.searchUser.toLowerCase();
-                    this.filteredAuthorsList = this.authorList.filter(author =>
-                        author.name?.toLowerCase().includes(keyword)
-                    );
+                    window.addEventListener('hide_add_author_modal', () => {
+                        this.addAuthorModal = false;
+                    });
+                },
+                closeModal() {
+                    this.addAuthorModal = false;
                 },
 
                 editUser(user) {
-                    this.params = { ...this.defaultParams }; // reset to default
-                    if (user) {
-                        this.params = JSON.parse(JSON.stringify(user)); // clone user data
-                    }
+                    this.params = { ...this.defaultParams };
+                    if (user) this.params = JSON.parse(JSON.stringify(user));
                     this.addAuthorModal = true;
-                },
-
-                deleteUser(user) {
-                    this.authorList = this.authorList.filter((d) => d.id != user.id);
-                    // this.ids = this.ids.filter((d) => d != user.id);
-                    this.searchAuthors();
-                    this.showMessage('User has been deleted successfully.');
                 },
 
                 setDisplayType(type) {
@@ -69,19 +44,38 @@
                 },
 
                 showMessage(msg = '', type = 'success') {
-                    const toast = window.Swal.mixin({
+                    Swal.fire({
                         toast: true,
                         position: 'top',
-                        showConfirmButton: false,
-                        timer: 3000,
-                    });
-                    toast.fire({
                         icon: type,
                         title: msg,
+                        showConfirmButton: false,
+                        timer: 3000,
                         padding: '10px 20px',
                     });
-                },
+                }
             }));
+        });
+
+        // 🔁 Unified global Swal alert (toast style to match above)
+        const showSwalAlert = (type, title, text) => {
+            Swal.fire({
+                toast: true,
+                icon: type,
+                title: title,
+                text: text,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 1500,
+                padding: '10px 20px',
+            });
+        };
+
+        // Global listeners for `swal:success` and `swal:error`
+        ['success', 'error'].forEach(type => {
+            window.addEventListener(`swal:${type}`, event => {
+                showSwalAlert(type, event.detail.title, event.detail.text);
+            });
         });
     </script>
 @endpush
