@@ -21,8 +21,17 @@
                             <span class="text-danger error-text post_title_error"></span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="ctnTextarea">Post Content</label>
-                            <textarea name="post_content" id="ctnTextarea" rows="3" class="form-textarea" placeholder="Content..." ></textarea>
+                            <label class="form-label" for="mde-autosave">Post Content</label>
+
+                            <div wire:ignore>
+        <textarea
+            name="post_content"
+            id="mde-autosave"
+            class="form-textarea"
+            placeholder="Write your post content..."
+        >{{ old('post_content') }}</textarea>
+                            </div>
+
                             <span class="text-danger error-text post_content_error"></span>
                         </div>
                         <div class="mb-3">
@@ -54,10 +63,35 @@
 
 @endsection
 @push('scripts')
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const fileInput = document.querySelector('input[type="file"][name="featured_image"]');
+            const textarea = document.getElementById('mde-autosave');
+
+            // Prevent initializing EasyMDE twice if this script runs more than once
+            if (!textarea || textarea.dataset.mdeInitialized === 'true') {
+                return;
+            }
+            textarea.dataset.mdeInitialized = 'true';
+
+            // 🔹 This is your EasyMDE editor – same style as the demo, but with YOUR content
+            const mde = new EasyMDE({
+                element: textarea,
+                autosave: {
+                    enabled: true,
+                    delay: 1000,
+                    uniqueId: 'post-editor-autosave', // any unique string
+                },
+                // ⚠️ IMPORTANT: use whatever is in the textarea (old('post_content')), not demo lorem
+                initialValue: textarea.value || '',
+                placeholder: "Write your post content...",
+                spellChecker: false,
+            });
+
+            // Hide the original textarea once EasyMDE is ready so only the editor shows
+            textarea.style.display = 'none';
+
+            // 🔹 IMAGE PREVIEW – your existing code
+            const fileInput  = document.querySelector('input[type="file"][name="featured_image"]');
             const previewImg = document.getElementById('image-previewer');
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
 
@@ -74,7 +108,7 @@
                             padding: '10px 20px'
                         });
 
-                        this.value = ''; // Clear input
+                        this.value = '';
                         previewImg.src = '';
                         previewImg.style.display = 'none';
                         return;
@@ -92,13 +126,19 @@
                 }
             });
 
-            $('form#addPostForm').on('submit',function (e) {
+            // 🔹 AJAX SUBMIT – with editor → textarea sync
+            $('form#addPostForm').on('submit', function (e) {
                 e.preventDefault();
                 let form = this;
+
+                // ✅ Make sure the textarea has whatever is in the editor
+                textarea.value = mde.value();
+
                 let formData = new FormData(form);
+
                 $.ajax({
                     url: $(form).attr('action'),
-                    method:$(form).attr('method'),
+                    method: $(form).attr('method'),
                     type: 'POST',
                     data: formData,
                     cache: false,
@@ -120,23 +160,21 @@
                             }).then(() => {
                                 window.location.href = '/author/posts/all';
                             });
-                        } else {
-                            if (response.errors) {
-                                Object.keys(response.errors).forEach(function (key) {
-                                    $(`.${key}_error`).text(response.errors[key][0]);
-                                });
+                        } else if (response.errors) {
+                            Object.keys(response.errors).forEach(function (key) {
+                                $(`.${key}_error`).text(response.errors[key][0]);
+                            });
 
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Please fix the form errors',
-                                    showConfirmButton: false,
-                                    timer: 1500,
-                                    padding: '10px 20px'
-                                });
-                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Please fix the form errors',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                padding: '10px 20px'
+                            });
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function (xhr) {
                         console.log(xhr);
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             $.each(xhr.responseJSON.errors, function (prefix, val) {
@@ -168,5 +206,4 @@
             });
         });
     </script>
-
 @endpush

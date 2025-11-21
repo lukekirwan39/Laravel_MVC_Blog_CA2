@@ -69,9 +69,9 @@
                     <div x-init="init()" class="relative">
                         <input
                             type="text"
-                            placeholder="Search Authors"
+                            placeholder="Search Authors..."
                             class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
-                            @input="searchAuthors"
+                            wire:model="search"
                         >
                         <div
                             class="absolute top-1/2 -translate-y-1/2 peer-focus:text-primary ltr:right-[11px] rtl:left-[11px]">
@@ -264,6 +264,7 @@
                         <div class="col-span-full text-center text-danger py-4">No Author Found!</div>
                     @endforelse
                 </div>
+
             </div>
 
             <!-- Add Author Modal -->
@@ -483,5 +484,90 @@
         <!-- end main content section -->
 
     </div>
+
+    @if ($authors->hasPages())
+        <div class="mt-6 flex w-full flex-col items-center justify-center space-y-2">
+
+            {{-- Page info --}}
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Page {{ $authors->currentPage() }} of {{ $authors->lastPage() }}
+                <span class="mx-2">•</span>
+                Showing {{ $authors->firstItem() }}–{{ $authors->lastItem() }} of {{ $authors->total() }} results
+            </div>
+
+            <ul class="m-auto mb-4 inline-flex items-center space-x-1 rtl:space-x-reverse">
+                {{-- First page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $authors->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if (! $authors->onFirstPage()) wire:click="gotoPage(1)" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Previous page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $authors->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if (! $authors->onFirstPage()) wire:click="previousPage" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Page numbers --}}
+                @for ($page = 1; $page <= $authors->lastPage(); $page++)
+                    <li>
+                        <button
+                            type="button"
+                            class="flex justify-center rounded-full px-3.5 py-2 font-semibold transition
+                            {{ $page == $authors->currentPage()
+                                ? 'bg-primary text-white dark:bg-primary dark:text-white-light'
+                                : 'bg-white-light text-dark hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary'
+                            }}"
+                            wire:click="gotoPage({{ $page }})"
+                        >
+                            {{ $page }}
+                        </button>
+                    </li>
+                @endfor
+
+                {{-- Next page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $authors->currentPage() == $authors->lastPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if ($authors->currentPage() < $authors->lastPage()) wire:click="nextPage" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Last page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $authors->currentPage() == $authors->lastPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if ($authors->currentPage() < $authors->lastPage()) wire:click="gotoPage({{ $authors->lastPage() }})" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    @endif
 
 </div>

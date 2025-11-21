@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Hash;
 use Nette\Utils\Random;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
+use Livewire\WithPagination;
 
 class Authors extends Component
 {
+    use WithPagination;
+
     public $name, $email, $username, $author_type, $direct_publisher;
+    public $search;
+    public $perPage = 15;
     public $selected_author_id;
     public $blocked = 0;
 
@@ -19,6 +24,14 @@ class Authors extends Component
         'resetForm',
         'deleteAuthorAction',
     ];
+
+    public function mount(){
+        $this->resetPage();
+    }
+
+    public function updatingSearch(){
+        $this->resetPage();
+    }
 
     public function resetForm(){
         $this->name = $this->email = $this->username = $this->author_type = $this->direct_publisher = null;
@@ -158,8 +171,9 @@ class Authors extends Component
 
     public function render()
     {
-        return view('livewire.authors',[
-            'authors'=>User::where('id','!=', auth()->id())->get(),
+        return view('livewire.authors', [
+            'authors' => User::search(trim($this->search))
+                            ->where('id', '!=', auth()->id())->paginate($this->perPage),
         ]);
     }
 }
