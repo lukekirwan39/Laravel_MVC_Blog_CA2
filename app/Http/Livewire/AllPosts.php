@@ -13,7 +13,7 @@ class AllPosts extends Component
 
     protected $listeners = ['deletePostAction'];
 
-    public $perPage = 10;
+    public $perPage = 12;
     public $search = null;
     public $author = null;
     public $category = null;

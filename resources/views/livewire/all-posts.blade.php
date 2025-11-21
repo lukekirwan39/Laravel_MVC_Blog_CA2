@@ -234,8 +234,102 @@
         </div>
     </div>
 
-    <div class="mt-6 flex justify-center">
-        {{ $posts->links('livewire::tailwind') }}
-    </div>
+    @if ($posts->hasPages())
+        <div class="mt-6 flex w-full flex-col items-center justify-center space-y-2">
+
+            {{-- Page info --}}
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Page {{ $posts->currentPage() }} of {{ $posts->lastPage() }}
+                <span class="mx-2">•</span>
+                Showing {{ $posts->firstItem() }}–{{ $posts->lastItem() }} of {{ $posts->total() }} results
+            </div>
+
+            {{-- Pagination buttons --}}
+            <ul class="m-auto mb-4 inline-flex items-center space-x-1 rtl:space-x-reverse">
+                {{-- First page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $posts->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if (! $posts->onFirstPage()) wire:click="gotoPage(1)" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5"
+                                  stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Previous page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $posts->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if (! $posts->onFirstPage()) wire:click="previousPage" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Page numbers --}}
+                @for ($page = 1; $page <= $posts->lastPage(); $page++)
+                    <li>
+                        <button
+                            type="button"
+                            class="flex justify-center rounded-full px-3.5 py-2 font-semibold transition
+                            {{ $page == $posts->currentPage()
+                                ? 'bg-primary text-white dark:bg-primary dark:text-white-light'
+                                : 'bg-white-light text-dark hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary'
+                            }}"
+                            wire:click="gotoPage({{ $page }})"
+                        >
+                            {{ $page }}
+                        </button>
+                    </li>
+                @endfor
+
+                {{-- Next page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $posts->currentPage() == $posts->lastPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if ($posts->currentPage() < $posts->lastPage()) wire:click="nextPage" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+
+                {{-- Last page --}}
+                <li>
+                    <button
+                        type="button"
+                        class="flex justify-center rounded-full bg-white-light p-2 font-semibold text-dark transition hover:bg-primary hover:text-white dark:bg-[#191e3a] dark:text-white-light dark:hover:bg-primary {{ $posts->currentPage() == $posts->lastPage() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        @if ($posts->currentPage() < $posts->lastPage()) wire:click="gotoPage({{ $posts->lastPage() }})" @endif
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rtl:rotate-180">
+                            <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5"
+                                  stroke="currentColor" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    @endif
 
 </div>

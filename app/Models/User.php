@@ -61,6 +61,16 @@ class User extends Authenticatable
         }
     }
 
+    public function scopeSearch($query, $term)
+    {
+        $term = "%$term%";
+        $query->where(function ($query) use ($term){
+            $query->where('name', 'like', $term)
+                ->orWhere('email','like',$term);
+        });
+
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class,'author_id','id');

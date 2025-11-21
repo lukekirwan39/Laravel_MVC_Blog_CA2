@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     <link defer="" rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/animate.css">
     <link rel="stylesheet" href="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     @stack('stylesheets')
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
@@ -23,6 +24,8 @@
     <script defer="" src="./back/assets/js/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
+@stack('scripts')
 
 <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
 <!-- sidebar menu overlay -->
@@ -303,9 +306,11 @@
 <script defer="" src="./back/assets/js/alpine-focus.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
 <script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
 
 <script defer="" src="./back/assets/js/alpine.min.js"></script>
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 @stack('scripts')
 @livewireScripts
 <script src="./back/assets/js/custom.js"></script>
