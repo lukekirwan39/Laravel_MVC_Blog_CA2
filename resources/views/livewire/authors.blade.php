@@ -118,13 +118,14 @@
                                         <td>
                                             <div class="flex items-center justify-center gap-4">
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        wire:click.prevent="editAuthor({{ $author->id }})">
+                                                        wire:click='editAuthor(@json($author))'
+                                                >
                                                     Edit
                                                 </button>
                                                 <button
                                                     type="button"
                                                     class="btn btn-sm btn-outline-danger"
-                                                    wire:click="deleteAuthor({{ $author->id }})"
+                                                    wire:click='deleteAuthor(@json($author))'
                                                 >
                                                     Delete
                                                 </button>
@@ -250,7 +251,13 @@
                                     Edit
                                 </button>
 
-                                <button type="button" class="btn btn-outline-danger w-1/2" @click="deleteUser({{ $author->id }})">Delete</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-danger w-1/2"
+                                    wire:click='deleteAuthor(@json($author))'
+                                >
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     @empty

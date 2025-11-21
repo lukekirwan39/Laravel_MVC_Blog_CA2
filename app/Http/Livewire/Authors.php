@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Nette\Utils\Random;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 class Authors extends Component
 {
@@ -15,7 +16,8 @@ class Authors extends Component
     public $blocked = 0;
 
     protected $listeners = [
-        'resetForm'
+        'resetForm',
+        'deleteAuthorAction',
     ];
 
     public function resetForm(){
@@ -89,50 +91,61 @@ class Authors extends Component
 
     }
 
-    public function editAuthor($id){
-        // 2. Fill your Livewire component properties
-        $author = User::findOrFail($id);
+    public function editAuthor($author){
+        $this->selected_author_id = $author['id'];
+        $this->name = $author['name'];
+        $this->email = $author['email'];
+        $this->username = $author['username'];
+        $this->author_type = $author['type'];
+        $this->direct_publisher = $author['direct_publish'];
+        $this->blocked = $author['blocked'];
 
-        $this->selected_author_id = $author->id;
-        $this->name = $author->name;
-        $this->email = $author->email;
-        $this->username = $author->username;
-        $this->author_type = $author->type;   // this is now an INT, not a model
-        $this->direct_publisher = $author->direct_publish;
-        $this->blocked = $author->blocked;
-
-        // 3. Open the edit modal in the browser using Alpine
         $this->dispatchBrowserEvent('show-edit-author-modal');
     }
 
-    public function updateAuthor()
-    {
-        // validate inputs
+    public function updateAuthor(){
+
         $this->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$this->selected_author_id,
-            'username' => 'required|min:6|max:20|unique:users,username,'.$this->selected_author_id,
+            'email' => 'required|email|unique:users,email,' . $this->selected_author_id,
+            'username' => 'required|min:6|max:20|unique:users,username,' . $this->selected_author_id,
         ]);
 
-        if($this->selected_author_id){
-            $author = User::find($this->selected_author_id);
-            $author->update([
-               'name'=>$this->name,
-               'email'=>$this->email,
-               'username'=>$this->username,
-                'type'=>$this->author_type,
-                'blocked'=>$this->blocked,
-                'direct_publish'=>$this->direct_publisher,
-            ]);
-        }
+        $author = User::findOrFail($this->selected_author_id);
 
-        // close the modal
+        $author->update([
+            'name'            => $this->name,
+            'email'           => $this->email,
+            'username'        => $this->username,
+            'type'            => $this->author_type,
+            'blocked'         => $this->blocked,
+            'direct_publish'  => $this->direct_publisher,
+        ]);
+
         $this->dispatchBrowserEvent('hide-edit-author-modal');
 
-        // optional: success message for user
-        session()->flash('success', 'Author updated successfully!');
-
         $this->resetForm();
+    }
+
+    public function deleteAuthor($author){
+        $this->dispatchBrowserEvent('deleteAuthor', [
+            'title'=>'Are you sure?',
+            'html'=>'You want to delete this author: <br><b>'.$author['name'].'</b>',
+            'id'=>$author['id'],
+        ]);
+    }
+
+
+    public function deleteAuthorAction($id){
+        $author = User::find($id);
+        $path = 'back/assets/images/authors/';
+        $author_picture = $author->getAttributes()['picture'];
+        $picture_full_path = $path.$author_picture;
+
+        if ($author_picture != null || File::exists(public_path($picture_full_path))){
+            File::delete(public_path($picture_full_path));
+        }
+        $author->delete();
     }
 
     public function isOnline($site = "https://youtube.com/"){
