@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 class Authors extends Component
 {
     public $name, $email, $username, $author_type, $direct_publisher;
+    public $selected_author_id;
+    public $blocked = 0;
 
     protected $listeners = [
         'resetForm'
@@ -87,8 +89,50 @@ class Authors extends Component
 
     }
 
-    public function editAuthor($author){
-        dd('Open edit author modal', $author);
+    public function editAuthor($id){
+        // 2. Fill your Livewire component properties
+        $author = User::findOrFail($id);
+
+        $this->selected_author_id = $author->id;
+        $this->name = $author->name;
+        $this->email = $author->email;
+        $this->username = $author->username;
+        $this->author_type = $author->type;   // this is now an INT, not a model
+        $this->direct_publisher = $author->direct_publish;
+        $this->blocked = $author->blocked;
+
+        // 3. Open the edit modal in the browser using Alpine
+        $this->dispatchBrowserEvent('show-edit-author-modal');
+    }
+
+    public function updateAuthor()
+    {
+        // validate inputs
+        $this->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$this->selected_author_id,
+            'username' => 'required|min:6|max:20|unique:users,username,'.$this->selected_author_id,
+        ]);
+
+        if($this->selected_author_id){
+            $author = User::find($this->selected_author_id);
+            $author->update([
+               'name'=>$this->name,
+               'email'=>$this->email,
+               'username'=>$this->username,
+                'type'=>$this->author_type,
+                'blocked'=>$this->blocked,
+                'direct_publish'=>$this->direct_publisher,
+            ]);
+        }
+
+        // close the modal
+        $this->dispatchBrowserEvent('hide-edit-author-modal');
+
+        // optional: success message for user
+        session()->flash('success', 'Author updated successfully!');
+
+        $this->resetForm();
     }
 
     public function isOnline($site = "https://youtube.com/"){

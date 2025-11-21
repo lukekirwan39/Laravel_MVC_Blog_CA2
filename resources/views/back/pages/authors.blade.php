@@ -28,6 +28,14 @@
                     window.addEventListener('hide_add_author_modal', () => {
                         this.addAuthorModal = false;
                     });
+
+                    window.addEventListener('showEditAuthorModal', function (event){
+                        $('#edit_author_modal').modal('show');
+                    });
+
+                    window.addEventListener('hide-edit-author-modal', function (event){
+                        $('#edit_author_modal').modal('hide');
+                    });
                 },
                 closeModal() {
                     this.addAuthorModal = false;
