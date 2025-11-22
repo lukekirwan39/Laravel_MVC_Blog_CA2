@@ -21,15 +21,15 @@
                             <span class="text-danger error-text post_title_error"></span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="mde-autosave">Post Content</label>
+                            <label class="form-label">Post Content</label>
 
                             <div wire:ignore>
         <textarea
             name="post_content"
-            id="mde-autosave"
-            class="form-textarea"
+            id="post_content"
+            class="ckeditor form-textarea"
             placeholder="Write your post content..."
-        >{{ old('post_content') }}</textarea>
+        ></textarea>
                             </div>
 
                             <span class="text-danger error-text post_content_error"></span>
@@ -63,34 +63,10 @@
 
 @endsection
 @push('scripts')
+    <script src="/ckeditor/ckeditor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const textarea = document.getElementById('mde-autosave');
 
-            // Prevent initializing EasyMDE twice if this script runs more than once
-            if (!textarea || textarea.dataset.mdeInitialized === 'true') {
-                return;
-            }
-            textarea.dataset.mdeInitialized = 'true';
-
-            // 🔹 This is your EasyMDE editor – same style as the demo, but with YOUR content
-            const mde = new EasyMDE({
-                element: textarea,
-                autosave: {
-                    enabled: true,
-                    delay: 1000,
-                    uniqueId: 'post-editor-autosave', // any unique string
-                },
-                // ⚠️ IMPORTANT: use whatever is in the textarea (old('post_content')), not demo lorem
-                initialValue: textarea.value || '',
-                placeholder: "Write your post content...",
-                spellChecker: false,
-            });
-
-            // Hide the original textarea once EasyMDE is ready so only the editor shows
-            textarea.style.display = 'none';
-
-            // 🔹 IMAGE PREVIEW – your existing code
             const fileInput  = document.querySelector('input[type="file"][name="featured_image"]');
             const previewImg = document.getElementById('image-previewer');
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -127,20 +103,20 @@
             });
 
             // 🔹 AJAX SUBMIT – with editor → textarea sync
-            $('form#addPostForm').on('submit', function (e) {
+            $('form#addPostForm')
+                .off('submit')
+                .on('submit', function (e) {
                 e.preventDefault();
+                let post_content = CKEDITOR.instances.post_content.getData();
                 let form = this;
-
-                // ✅ Make sure the textarea has whatever is in the editor
-                textarea.value = mde.value();
-
-                let formData = new FormData(form);
+                let fromData = new FormData(form);
+                fromData.append('post_content', post_content)
 
                 $.ajax({
                     url: $(form).attr('action'),
                     method: $(form).attr('method'),
                     type: 'POST',
-                    data: formData,
+                    data: fromData,
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -160,6 +136,7 @@
                             }).then(() => {
                                 window.location.href = '/author/posts/all';
                             });
+                            CKEDITOR.instances.post_content.setData('');
                         } else if (response.errors) {
                             Object.keys(response.errors).forEach(function (key) {
                                 $(`.${key}_error`).text(response.errors[key][0]);

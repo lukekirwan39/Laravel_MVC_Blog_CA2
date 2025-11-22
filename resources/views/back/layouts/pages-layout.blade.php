@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     <link defer="" rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/animate.css">
     <link rel="stylesheet" href="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     @stack('stylesheets')
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
@@ -310,7 +309,6 @@
 <script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
 
 <script defer="" src="./back/assets/js/alpine.min.js"></script>
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 @stack('scripts')
 @livewireScripts
 <script src="./back/assets/js/custom.js"></script>
