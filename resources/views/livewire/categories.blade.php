@@ -82,7 +82,6 @@
                 <div class="flex-1">
                     <div class="panel">
                         <div class="mb-5">
-                            <!-- ✅ Scrollable table wrapper -->
                             <div class="w-full overflow-x-auto block">
                                 <table class="w-full min-w-[800px] table-auto divide-y divide-gray-200 text-sm">
                                     <thead class="bg-gray-100 text-gray-700 font-semibold">
@@ -99,7 +98,7 @@
 
                                     <tr>
                                         <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->subcategory_name }}</td>
-                                        <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->parentcategory->category_name ?? 'N/A' }}</td>
+                                        <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->parent_category != 0.? $subcategory->parentcategory->category_name : ' - ' }}</td>
                                         <td class="px-4 py-2">{{ $subcategory->posts->count() }}</td>
                                         <td class="text-center px-4 py-2">
                                             <button class="text-primary" x-tooltip="Edit"
@@ -280,9 +279,8 @@
                         class="form-select bg-white text-gray-900 dark:bg-gray-800 dark:text-white border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20"
                         wire:model="parent_category"
                     >
-                        @if(!$updateSubCategoryMode)
-                            <option value="">No Selected</option>
-                        @endif
+                        <option value="0">-- Uncategorized --</option>
+
                         @foreach(\App\Models\Category::all() as $category)
                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                         @endforeach
