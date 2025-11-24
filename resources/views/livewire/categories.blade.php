@@ -21,11 +21,11 @@
                                         <th class="px-4 py-2 text-center">Delete</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="sortable_category">
                                     @forelse($categories as $category)
 
 
-                                    <tr>
+                                    <tr data-index="{{ $category->id }}" data-ordering="{{ $category->ordering }}">
                                         <td class="whitespace-nowrap px-4 py-2">{{ $category->category_name }}</td>
                                         <td class="px-4 py-2">{{ $category->subcategories->count() }}</td>
                                         <td class="text-center px-4 py-2">
@@ -93,10 +93,10 @@
                                         <th class="px-4 py-2 text-center">Delete</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="sortable_subcategory">
                                     @forelse($subcategories as $subcategory)
 
-                                    <tr>
+                                    <tr data-index="{{ $subcategory->id }}" data-ordering="{{ $subcategory->ordering }}">
                                         <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->subcategory_name }}</td>
                                         <td class="whitespace-nowrap px-4 py-2">{{ $subcategory->parent_category != 0.? $subcategory->parentcategory->category_name : ' - ' }}</td>
                                         <td class="px-4 py-2">{{ $subcategory->posts->count() }}</td>

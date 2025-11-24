@@ -21,7 +21,9 @@ class Categories extends Component
 
     protected $listeners = [
         'deleteCategoryAction',
-        'deleteSubCategoryAction'
+        'deleteSubCategoryAction',
+        'updateCategoryOrdering',
+        'updatedSubCategoryOrdering',
     ];
 
     public function addCategory()
@@ -185,6 +187,28 @@ class Categories extends Component
             session()->flash('error', 'You cannot delete this subcategory because it has posts.');
         }else{
             $subcategory->delete();
+        }
+    }
+
+    public function updateCategoryOrdering($positions){
+        foreach ($positions as $position){
+            $index = $position[0];
+            $newPosition = $position[1];
+            Category::where('id', $index)->update([
+                'ordering'=>$newPosition
+            ]);
+
+        }
+    }
+
+    public function updatedSubCategoryOrdering($positions){
+        foreach ($positions as $position){
+            $index = $position[0];
+            $newPosition = $position[1];
+            SubCategory::where('id', $index)->update([
+                'ordering'=>$newPosition
+            ]);
+
         }
     }
 

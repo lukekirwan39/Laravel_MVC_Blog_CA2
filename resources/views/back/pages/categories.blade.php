@@ -39,6 +39,7 @@
 @endsection
 @push('scripts')
     <script>
+
         window.addEventListener('hideCategoriesModal', function (e) {
             Alpine.store('categoryModal').close();
         });
@@ -91,5 +92,52 @@
         //         }
         //     })
         // });
+
+
+
+        $('table tbody#sortable_category').sortable({
+            update:function (event, ui){
+                $(this).children().each(function (index){
+                    if($(this).attr("data-ordering") != (index+1)){
+                        $(this).attr("data-ordering", (index+1)).addClass("updated");
+                    }
+                });
+
+                let positions = [];
+                $(".updated").each(function (){
+                    positions.push([$(this).attr("data-index"), $(this).attr("data-ordering")]);
+                    $(this).removeClass("updated");
+                })
+
+                window.livewire.emit("updateCategoryOrdering", positions);
+            }
+        })
+
+        $('table tbody#sortable_subcategory').sortable({
+            update:function (event, ui){
+                $(this).children().each(function (index){
+                    if($(this).attr("data-ordering") != (index+1)){
+                        $(this).attr("data-ordering", (index+1)).addClass("updated");
+                    }
+                });
+
+                let positions = [];
+                $(".updated").each(function (){
+                    positions.push([$(this).attr("data-index"), $(this).attr("data-ordering")]);
+                    $(this).removeClass("updated");
+                })
+
+                window.livewire.emit("updatedSubCategoryOrdering", positions);
+            }
+        })
+
+        window.addEventListener('ordering-updated', function(e) {
+            Swal.fire({
+                icon: 'success',
+                title: e.detail.message,
+                timer: 1200,
+                showConfirmButton: false,
+            });
+        });
     </script>
 @endpush
