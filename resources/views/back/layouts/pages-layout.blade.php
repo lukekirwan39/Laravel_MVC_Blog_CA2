@@ -14,6 +14,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     <link defer="" rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/animate.css">
     <link rel="stylesheet" href="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.css') }}">
+    <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.theme.min.css">
     @stack('stylesheets')
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
@@ -304,6 +307,7 @@
 <script defer="" src="./back/assets/js/alpine-ui.min.js"></script>
 <script defer="" src="./back/assets/js/alpine-focus.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/jquery-ui-1.14.1/jquery-ui.min.js"></script>
 
 
 <script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
