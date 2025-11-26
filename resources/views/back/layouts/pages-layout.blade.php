@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.min.css">
     <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.structure.min.css">
     <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="/amsify/amsify.suggestags.css">
     @stack('stylesheets')
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
@@ -308,6 +309,7 @@
 <script defer="" src="./back/assets/js/alpine-focus.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+<script src="/amsify/jquery.amsify.suggestags.js"></script>
 
 
 <script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
@@ -319,6 +321,9 @@
 <script defer="" src="./back/assets/js/apexcharts.js"></script>
 
 <script>
+
+    $('input[name="post_tags"]').amsifySuggestags();
+
     document.addEventListener('alpine:init', () => {
         // main section
         Alpine.data('scrollToTop', () => ({

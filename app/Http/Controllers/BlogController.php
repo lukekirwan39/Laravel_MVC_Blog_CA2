@@ -13,7 +13,7 @@ class BlogController extends Controller
     public function index()
     {
         $posts = Post::all();
-        $categories = Category::all(); // Fetch categories from the database
+        $categories = Category::all();
 
         return view('blog.index', compact('posts', 'categories'));
     }

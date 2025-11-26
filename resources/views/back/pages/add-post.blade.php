@@ -54,6 +54,10 @@
                                 <img src="" alt="" class="img-thumbnail" id="image-previewer" data-ijabo-default-image=''>
                             </div>
                         </div>
+                        <div>
+                            <label for="" class="form-label">Post tags</label>
+                            <input type="text" class="form-input mb-5" name="post_tags">
+                        </div>
                         <button type="submit" class="btn btn-primary">Save post</button>
                     </div>
                 </div>
@@ -137,6 +141,7 @@
                                 window.location.href = '/author/posts/all';
                             });
                             CKEDITOR.instances.post_content.setData('');
+                            $('input[name="post_tags"]').amsifySuggestags();
                         } else if (response.errors) {
                             Object.keys(response.errors).forEach(function (key) {
                                 $(`.${key}_error`).text(response.errors[key][0]);

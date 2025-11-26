@@ -45,6 +45,10 @@
                                 <img src="/storage/images/post_images/thumbnails/resized_{{ $post->featured_image }}" alt="" class="img-thumbnail" id="image-previewer">
                             </div>
                         </div>
+                        <div>
+                            <label for="" class="form-label">Post tags</label>
+                            <input type="text" class="form-input mb-5" name="post_tags" value="{{ $post->post_tags }}">
+                        </div>
                         <div class="flex items-center gap-4 mt-6">
                             <button type="submit" class="btn btn-primary">Update Post</button>
                             <button
