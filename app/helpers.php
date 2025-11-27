@@ -1,6 +1,7 @@
 <?php
 use App\Models\Setting;
 use App\Models\Post;
+use App\Models\SubCategory;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -71,6 +72,9 @@ if (!function_exists('single_latest_post')){
     }
 }
 
+/**
+ * DISPLAY 6 LATEST POSTS ON HOME PAGE
+ */
 if (!function_exists('latest_home_6posts')){
     function latest_home_6posts() {
         return Post::with('author')
@@ -82,3 +86,27 @@ if (!function_exists('latest_home_6posts')){
     }
 }
 
+/**
+ * RANDOM RECOMMENDED POSTS
+ */
+if (!function_exists('recommended_posts')){
+    function recommended_posts() {
+        return Post::with('author')
+            ->with('subcategory')
+            ->limit(4)
+            ->inRandomOrder()
+            ->get();
+    }
+}
+
+/**
+ * POSTS WITH NUMBER OF POSTS
+ */
+if (!function_exists('categories')){
+    function categories() {
+        return SubCategory::whereHas('posts')
+            ->with('posts')
+            ->orderBy('subcategory_name','asc')
+            ->get();
+    }
+}
