@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light px-0">
             <a class="navbar-brand order-1 py-0" href="/">
-                <img loading="prelaod" decoding="async" class="img-fluid" src="{{ blogInfo()->blog_logo }}" alt="{{ blogInfo()->blog_name }}" style="max-width: 100px">
+                <img loading="prelaod" decoding="async" class="img-fluid" src="{{ asset(blogInfo()->blog_logo) }}" alt="{{ blogInfo()->blog_name }}" style="max-width: 100px">
             </a>
             <div class="navbar-actions order-3 ml-0 ml-md-4">
                 <button aria-label="navbar toggler" class="navbar-toggler border-0" type="button" data-toggle="collapse"
@@ -26,13 +26,13 @@
                         <div class="dropdown-menu">
                             @foreach( \App\Models\SubCategory::where('parent_category', $category->id)->whereHas('posts')
 ->orderBy('ordering', 'asc')->get() as $subcategory)
-                            <a class="dropdown-item" href="">{{ $subcategory->subcategory_name }}</a>
+                            <a class="dropdown-item" href="{{ route('category_posts', $subcategory->slug) }}">{{ $subcategory->subcategory_name }}</a>
                             @endforeach
                         </div>
                     </li>
                     @endforeach
                     @foreach( \App\Models\SubCategory::where('parent_category', 0)->whereHas('posts')->orderBy('ordering', 'asc')->get() as $subcategory)
-                        <li class="nav-item"><a class="nav-link" href="">{{ $subcategory->subcategory_name }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('category_posts', $subcategory->slug) }}">{{ $subcategory->subcategory_name }}</a></li>
                     @endforeach
                     <li class="nav-item"> <a class="nav-link" href="contact.html">Contact</a>
                     </li>
