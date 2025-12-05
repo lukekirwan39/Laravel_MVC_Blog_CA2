@@ -31,6 +31,7 @@
 
     <!-- # Main Style Sheet -->
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
+    @stack('stylesheets')
 </head>
 
 <body>
@@ -50,6 +51,7 @@
 <!-- # JS Plugins -->
 <script src="{{ asset('front/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('front/plugins/bootstrap/bootstrap.min.js') }}"></script>
+@stack('scripts')
 
 <!-- Main Script -->
 <script src="{{ asset('front/js/script.js') }}"></script>
