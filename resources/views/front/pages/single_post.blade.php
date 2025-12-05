@@ -65,6 +65,64 @@
             <div class="mt-5">
 
             </div>
+            <h3>Comments ({{ $post->comments->count() }})</h3>
+
+            @forelse ($post->comments as $comment)
+                <div class="mb-3 border p-2 rounded">
+                    <strong>{{ $comment->author_name }}</strong>
+                    <small class="text-muted d-block">
+                        {{ $comment->created_at->diffForHumans() }}
+                    </small>
+
+                    <p class="mb-2">{{ $comment->body }}</p>
+
+                    <div class="d-flex gap-2">
+                        {{-- Edit --}}
+                        <a href="{{ route('comments.edit', $comment) }}" class="btn btn-sm btn-outline-primary">
+                            Edit
+                        </a>
+
+                        {{-- Delete --}}
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST"
+                              onsubmit="return confirm('Delete this comment?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @empty
+                <p>No comments yet. Be the first to comment!</p>
+            @endforelse
+
+            <form action="{{ route('comments.store', $post) }}" method="POST">
+                @csrf
+
+                @guest
+                    <div class="mb-3">
+                        <label for="author_name" class="form-label">Name</label>
+                        <input type="text" name="author_name" id="author_name"
+                               class="form-control @error('author_name') is-invalid @enderror"
+                               value="{{ old('author_name') }}">
+                        @error('author_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endguest
+
+                <div class="mb-3">
+                    <label for="body" class="form-label">Comment</label>
+                    <textarea name="body" id="body" rows="3"
+                              class="form-control @error('body') is-invalid @enderror">{{ old('body') }}</textarea>
+                    @error('body')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
         </div>
         <div class="col-lg-4">
             <div class="widget-blocks">
