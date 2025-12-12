@@ -4,7 +4,7 @@
             <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
                 <div class="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                     <a href="{{ route( 'author.home') }}" class="main-logo flex shrink-0 items-center">
-                        <img class="inline w-12 ltr:-ml-1 rtl:-mr-1" src="/images/pngegg.png" alt="Blog icon">
+                        <img class="inline w-12 ltr:-ml-1 rtl:-mr-1" src="{{ \App\Models\Setting::find(1)->blog_logo }}" alt="Blog icon">
                     </a>
 
                     <a href="javascript:;" class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden" @click="$store.app.toggleSidebar()">

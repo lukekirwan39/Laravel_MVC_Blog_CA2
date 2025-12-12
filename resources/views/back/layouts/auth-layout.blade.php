@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link rel="icon" type="image/x-icon" href="/images/pngegg.png">
+    <link rel="shortcut icon" href="{{ \App\Models\Setting::find(1)->blog_favicon }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/style.css">
     @stack('stylesheets')
     @livewireStyles

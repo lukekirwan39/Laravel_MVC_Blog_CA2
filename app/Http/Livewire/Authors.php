@@ -74,11 +74,24 @@ class Authors extends Component
             $author_name = $this->name;
 
             if ($saved) {
-                Mail::send('new-author-email-template', $data, function ($message) use ($author_email, $author_name) {
-                    $message->from('noreply@example.com', 'Larablog');
-                    $message->to($author_email, $author_name)
-                        ->subject('New Author Account Created');
-                });
+//                Mail::send('new-author-email-template', $data, function ($message) use ($author_email, $author_name) {
+//                    $message->from('noreply@example.com', 'Larablog');
+//                    $message->to($author_email, $author_name)
+//                        ->subject('New Author Account Created');
+//                });
+
+                $mail_body = view('new-author-email-template', $data)->render();
+
+                $mailConfig = array(
+                    'mail_from_email' => env('EMAIL_FROM_ADDRESS'),
+                    'mail_from_name' => env('EMAIL_FROM_NAME'),
+                    'mail_recipient_email' => $author_email,
+                    'mail_recipient_name' => $author_name,
+                    'mail_subject' => 'Account creation',
+                    'mail_body' => $mail_body
+                );
+
+                sendMail($mailConfig);
 
                 $this->dispatchBrowserEvent('swal:success', [
                     'title' => 'Success',
