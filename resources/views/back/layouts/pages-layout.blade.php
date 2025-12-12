@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.structure.min.css">
     <link rel="stylesheet" href="/jquery-ui-1.14.1/jquery-ui.theme.min.css">
     <link rel="stylesheet" href="/amsify/amsify.suggestags.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     @stack('stylesheets')
     @livewireStyles
     <script src="./back/assets/js/perfect-scrollbar.min.js"></script>
