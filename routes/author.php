@@ -20,9 +20,15 @@ Route::prefix('author')->name('author.')->group(function (){
         Route::view('/about', 'back.pages.about')->name('about');
         Route::view('/contact', 'back.pages.contact')->name('contact');
         Route::post('/change-profile-picture', [AuthorController::class, 'changeProfilePicture'])->name('change-profile-picture');
-        Route::view('/settings', 'back.pages.settings')->name('settings');
-        Route::view('/categories', 'back.pages.categories')->name('categories');
-        Route::view('/authors','back.pages.authors')->name('authors');
+        Route::post('/change-blog-logo', [AuthorController::class, 'changeBlogLogo'])->name('change-blog-logo');
+        Route::post('/change-blog-favicon', [AuthorController::class, 'changeBlogFavicon'])->name('change-blog-favicon');
+
+        // Only Admin can access the following routes
+        Route::middleware('isAdmin')->group(function (){
+            Route::view('/settings', 'back.pages.settings')->name('settings');
+            Route::view('/categories', 'back.pages.categories')->name('categories');
+            Route::view('/authors','back.pages.authors')->name('authors');
+        });
 
 
         Route::prefix('posts')->name('posts.')->group(function (){

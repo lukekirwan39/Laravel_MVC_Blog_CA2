@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link rel="icon" type="image/x-icon" href="/images/pngegg.png">
+    <link rel="shortcut icon" href="{{ \App\Models\Setting::find(1)->blog_favicon }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="stylesheet" type="text/css" media="screen" href="./back/assets/css/perfect-scrollbar.min.css">
@@ -27,8 +27,6 @@
     <script defer="" src="./back/assets/js/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
-@stack('scripts')
 
 <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
 <!-- sidebar menu overlay -->
@@ -303,17 +301,17 @@
 
 
 
+<script src="{{ asset('back/assets/libs/jquery/jquery-3.6.0.min.js') }}"></script>
+<script src="/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+<script src="/amsify/jquery.amsify.suggestags.js"></script>
+<script src="{{ asset('back/assets/libs/ijabo/ijabo.min.js') }}"></script>
+<script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
+<script src="{{ asset('back/assets/libs/ijaboViewer/jquery.ijaboViewer.min.js') }}"></script>
+
 <script src="./back/assets/js/alpine-collaspe.min.js"></script>
 <script src="./back/assets/js/alpine-persist.min.js"></script>
 <script defer="" src="./back/assets/js/alpine-ui.min.js"></script>
 <script defer="" src="./back/assets/js/alpine-focus.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/jquery-ui-1.14.1/jquery-ui.min.js"></script>
-<script src="/amsify/jquery.amsify.suggestags.js"></script>
-
-
-<script src="{{ asset('back/assets/libs/ijaboCropTool/ijaboCropTool.min.js') }}"></script>
-
 <script defer="" src="./back/assets/js/alpine.min.js"></script>
 @stack('scripts')
 @livewireScripts
@@ -322,7 +320,9 @@
 
 <script>
 
-    $('input[name="post_tags"]').amsifySuggestags();
+    if ($.fn.amsifySuggestags) {
+        $('input[name="post_tags"]').amsifySuggestags();
+    }
 
     document.addEventListener('alpine:init', () => {
         // main section

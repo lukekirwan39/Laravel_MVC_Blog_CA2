@@ -169,6 +169,25 @@
                             </div>
                         </div>
                     </div>
+                    @if(all_tags() != null)
+                        @php
+                        $allTagsString = all_tags();
+                        $allTagsArray = explode(',',$allTagsString);
+                        @endphp
+                    <div>
+                        <div>
+                            <h2>
+                                <div>
+                                    <ul>
+                                        <li>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
