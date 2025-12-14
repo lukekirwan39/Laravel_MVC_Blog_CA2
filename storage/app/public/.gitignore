@@ -1,2 +1,5 @@
 *
 !.gitignore
+!images/
+!images/post_images/
+!images/post_images/**
